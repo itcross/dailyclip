@@ -1,0 +1,27 @@
+@charset "UTF-8";
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(https://fonts.googleapis.com/css?family=Lobster|Open+Sans|Varela+Round);
+
+/* -------- 태그초기화 -------- */
+body, h1, h2, h3, h4, p, ul, dl, dd, button, hr {margin:0;padding:0;}
+body {font-size:13px; font-family:'Open Sans','NanumSquare',  sans-serif;}
+h1, h2, h3, h4, h5, h6 {font-size:inherit;}
+ul, li {list-style:none;}
+img {border:0; vertical-align:top; display: block;}
+a {text-decoration:none; color: #fff; display: block;}
+hr {width:1px;height:1px; overflow:hidden; position:absolute;top:0;left:-9999px;visibility:hidden;}
+address {font-style:normal;}
+article,aside,footer,header,nav,section,summary {display:block;}
+em {font-style:normal;}
+table {border-collapse:collapse; border-spacing:0;}
+caption {font-size:0;line-height:0;width:0;height:0;overflow:hidden;visibility:hidden;}
+input, select {padding:0; background:none; font-family:inherit; font-size:inherit; border:0;}
+fieldset {border:0; margin: 0; padding: 0;} 
+button {border:0; cursor:pointer;}
+
+/* -------- 공통 -------- */
+
+::-webkit-input-placeholder {color:rgb( 247, 247, 247 );}  /* 크롬 */
+:-moz-placeholder { color:rgb( 247, 247, 247 );opacity:1;} /* 파이어폭스 */
+:-ms-input-placeholder {color:rgb( 247, 247, 247 );}  /* 인터넷 익스플로러 */
+::placeholder {color:rgb( 247, 247, 247 );opacity:1;}
