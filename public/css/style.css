@@ -1,0 +1,393 @@
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+#wrap {
+  width:100%;
+}
+
+/* ---------------------- main ---------------------- */
+#main {
+  position:relative; 
+  width:100%; 
+  height:736px; 
+  margin:0 auto;
+  background:url("../images/bg_2.jpg") center 0 no-repeat;
+}
+
+#main .login_area {
+  position:absolute; 
+  left:50%; 
+  transform: translate(-50%,0);
+  bottom:20px;
+}
+
+#main .login_area label {
+  display:none;
+}
+
+#main .login_area .input_box {
+  position:relative;
+  border-radius: 50px;
+  background-color: rgb( 0, 0, 0 );
+  opacity: 0.341;
+  width: 318px;
+  height: 52px;
+  margin-bottom:15px;
+}
+
+#main .login_area .input_box input {
+  font-size: 13px;
+  font-family: 'Nanum Gothic', serif;
+  color: rgb( 193, 193, 193 );
+  -moz-transform: scale(0.99, 1);
+  -webkit-transform: scale(0.99, 1);
+  -ms-transform: scale(0.99, 1);
+  position:absolute;
+  left : 60px;
+  top : 13px;
+  border-style:none;
+  padding:5px;
+}
+
+#main .login_area .input_box span {
+  display:inline-block;
+  background:#fff;
+  width:25px;
+  height:25px;
+  position:absolute;
+  left:25px;
+  top:13px;
+}
+
+#main .login_area .btn_login {
+  border-radius:50px;
+  background-color: rgb( 255, 111, 65 );
+  opacity: 0.759;
+  box-shadow: 4px 6.928px 18px 1px rgb( 21, 11, 8 );
+  width: 318px;
+  height: 52px;
+  display:table-cell;
+  text-align:center;
+  vertical-align:middle;
+  cursor:pointer;
+  letter-spacing:1px;
+}
+
+#main .login_area .btn_login span {
+  color:#fff;
+  line-height:0.5;
+  font-size:17px;
+/*   font-family: "DINAlternate"; */
+  font-family: 'Nanum Gothic', serif;
+  -moz-transform: matrix( 1.41126510928624,0,0,1.42552031241033,0,0);
+  -webkit-transform: matrix( 1.41126510928624,0,0,1.42552031241033,0,0);
+  -ms-transform: matrix( 1.41126510928624,0,0,1.42552031241033,0,0);
+}
+
+#main .login_area .btn_help {
+  height:40px;
+ }
+
+#main .login_area .btn_help .join_help {
+  position:absolute;
+  left:25px;
+  bottom:3px;
+  font-size:13px;
+  font-family: 'Nanum Gothic', serif;
+  color: rgb( 255, 255, 255 );
+  line-height:0.5;
+  -moz-transform: scale(0.99, 1);
+  -webkit-transform: scale(0.99, 1);
+  -ms-transform: scale(0.99, 1);
+  cursor:pointer;
+}
+
+#main .login_area .btn_help .search_help {
+  position:absolute;
+  right:25px;
+  bottom:3px;
+  font-size:13px;
+  font-family: 'Nanum Gothic', serif;
+  color: rgb( 255, 255, 255 );
+  line-height:0.5;
+  -moz-transform: scale(0.99, 1);
+  -webkit-transform: scale(0.99, 1);
+  -ms-transform: scale(0.99, 1);
+  cursor:pointer;
+}
+
+@media screen and (max-width : 375px) {
+	.main {height:667px; background:url("../images/bg_3.jpg") no-repeat;}
+	.login_area {bottom:18px;}
+
+}
+
+@media screen and (max-width : 360px) {
+	.main {height:640px;  background:url("../images/bg_4.jpg") no-repeat;}
+}
+
+@media screen and (max-width : 320px) {
+	.main {height:568px;  background:url("../images/bg_5.jpg") no-repeat;}
+}
+
+
+/* ---------------------- 회원가입 ---------------------- */
+
+#join {
+  position:relative; 
+  width:100%; 
+  height:736px; 
+  margin:0 auto;
+  background:url("../images/join_bg.jpg") center 0 no-repeat;
+}
+
+#join .join_area {
+  width:325px; 
+  position: absolute;
+  left:50%; 
+  top:240px; 
+  transform: translate(-50%,0);
+ }
+
+#join .join_area label {
+  display:none;
+}
+
+#join .join_area .join_box {
+  position:relative; 
+  padding:35px 0 10px 0; 
+  border-bottom:1px solid #fff;
+}
+
+#join .join_area .join_box input {
+  font-size: 12px;
+  font-family: 'Nanum Gothic', serif;
+  color: rgb( 247, 247, 247 );
+  line-height:0.5;
+  -moz-transform: scale(0.99, 1);
+  -webkit-transform: scale(0.99, 1);
+  -ms-transform: scale(0.99, 1);
+  border-style:none;
+  margin-left:50px;
+  padding:5px;
+}
+
+#join .join_area .join_box span {
+  position:absolute;
+  display:inline-block;
+  background:#fff;
+  width:20px;
+  height:20px;
+  bottom:12px;
+  left:15px;
+}
+
+#join .join_area .select_box ul li:nth-child(even) {
+  float:left; 
+  width:135px;
+}
+
+#join .join_area .select_box ul li:nth-child(odd) {
+  float:right; 
+  width:135px;
+}
+
+#join .join_area .select_box ul li {
+  padding:35px 0 0 15px;
+}
+
+#join .join_area .select_box select {
+  color:rgb( 247, 247, 247 );
+  width:110px;
+  border-style:none;
+  line-height:0.5;
+  font-size: 12px;
+  font-family: 'Nanum Gothic', serif;
+  padding:0 0 0 15px;
+}
+
+#join .join_area .select_box span {
+  display:inline-block;
+  background:#fff;
+  width:20px;
+  height:20px;
+  left:20px;
+}
+
+#join button {
+  position: absolute;
+  border-radius: 50px;
+  background-color: rgb( 255, 111, 65 );
+  box-shadow: 4px 6.928px 18px 1px rgb( 21, 11, 8 );
+  opacity: 0.859;
+  width: 318px;
+  height: 52px;
+  left:50%; 
+  transform: translate(-50%,0);
+  bottom:60px;
+  display:table-cell;
+  text-align:center;
+  vertical-align:middle;
+  cursor:pointer;
+  letter-spacing:1px;
+}
+
+#join button a span {
+  color:#fff;
+  line-height:0.5;
+  font-size:16px;
+  font-family: 'Nanum Gothic', serif;
+  -moz-transform: matrix( 1.41126510928624,0,0,1.42552031241033,0,0);
+  -webkit-transform: matrix( 1.41126510928624,0,0,1.42552031241033,0,0);
+  -ms-transform: matrix( 1.41126510928624,0,0,1.42552031241033,0,0);
+}
+
+/* ---------------------- 리스트 ---------------------- */
+#list {
+  width:100%; 
+  height:736px; 
+  margin:0 auto;
+}
+
+#list .list_area {
+  width:414px; 
+  position: absolute;
+  left:50%; 
+  transform: translate(-50%,0);
+ }
+
+#list .list_area .top_menu {
+  position:fixed;
+  width:414px;
+  height:65px;
+  background:url("../images/bar_list.jpg");
+}
+
+#list .list_area .top_menu .btn_prev {
+  position:absolute; 
+  left:25px; 
+  top:23px; 
+  cursor:pointer;
+}
+
+#list .list_area .top_menu .btn_search {
+  position:absolute; 
+  right:25px; 
+  top:23px;
+  cursor:pointer;
+}
+
+#list .list_area .section {
+  width:414px;
+  height:604px;
+  margin-top:65px;
+  background-color:rgb(234,234,234);
+  overflow:auto;
+}
+
+#list .list_area .section .article {
+  width:390px;
+  height:110px;
+  background:#fff;
+  margin:10px auto;
+}
+
+#list .list_area .section .article .img_thumb {
+  float:left; 
+  width:110px;
+  height:110px;
+  display:table-cell; 
+  text-align:center; 
+  vertical-align:middle; 
+  background:url("../images/bg.jpg");
+}
+
+#list .list_area .section .article .content {
+  position:relative; 
+  float:left; 
+  width:280px; 
+  height:110px; 
+  box-sizing:border-box; 
+  padding:10px;
+}
+
+#list .list_area .section .article .content .title_article  {
+  font-size: 13px;
+  font-weight:bold;
+  font-family: 'Nanum Gothic', serif;
+  color: rgb( 0, 0, 0 );
+  line-height:1;
+  -moz-transform: scale(0.99, 1);
+  -webkit-transform: scale(0.99, 1);
+  -ms-transform: scale(0.99, 1);
+}
+
+#list .list_area .section .article .content .content_article {
+  width:245px;
+  height:30px;
+  margin-top:10px;
+  font-size: 8px;
+  font-family: 'Nanum Gothic', serif;
+  color: rgb( 117, 117, 117 );
+  line-height: 1.5;
+  -moz-transform: scale(0.99, 1);
+  -webkit-transform: scale(0.99, 1);
+  -ms-transform: scale(0.99, 1);
+}
+
+#list .list_area .section .article .content .source_area .date_article {
+  font-size:7px;
+  font-family: 'Nanum Gothic', serif;
+  color: rgb( 112, 112, 112 );
+  line-height: 1.5;
+  -moz-transform: scale(0.99, 1);
+  -webkit-transform: scale(0.99, 1);
+  -ms-transform: scale(0.99, 1);
+}
+
+#list .list_area .section .article .content .source_area .addr_article {
+  font-size:10px;
+  font-family: 'Nanum Gothic', serif;
+  -moz-transform: scale(0.99, 1);
+  -webkit-transform: scale(0.99, 1);
+  -ms-transform: scale(0.99, 1);
+}
+
+#list .list_area .section .article .content .source_area {
+  position:absolute;
+  bottom:10px;
+  left:10px;
+}
+
+#list .list_area .section .article .content .chk_list {
+  position:absolute;
+  right:10px; 
+  bottom:10px;
+  width:15px; 
+  height:15px; 
+  background:red;
+}
+
+#list .list_area .bottom_menu {
+  position:fixed;
+  width:414px;
+  height:65px;
+  background:#fff;
+}
+
+#list .list_area .bottom_menu ul li {
+  position:relative;
+  float:left;
+  width:25%;
+  height:65px;
+}
+
+#list .list_area .bottom_menu ul li img {
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:32px;
+  height:40px;
+  margin-left:-16px;
+  margin-top:-20px;
+}
