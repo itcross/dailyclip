@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 @import url(https://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
 #wrap {
@@ -261,6 +261,16 @@
   width:414px;
   height:65px;
   background:url("../images/bar_list.jpg");
+  line-height: 0.95;
+  color:#fff;
+  font-size:20px;
+  text-align:center;
+  font-family: 'Nanum Gothic', serif;
+  letter-spacing:1px;
+}
+
+#list .list_area .top_menu h1 {
+  margin-top:23px;
 }
 
 #list .list_area .top_menu .btn_prev {
@@ -375,14 +385,14 @@
   background:#fff;
 }
 
-#list .list_area .bottom_menu ul li {
+#list .list_area .bottom_menu .icon_bottom li {
   position:relative;
   float:left;
   width:25%;
   height:65px;
 }
 
-#list .list_area .bottom_menu ul li img {
+#list .list_area .bottom_menu .icon_bottom li img {
   position:absolute;
   left:50%;
   top:50%;
@@ -390,4 +400,151 @@
   height:40px;
   margin-left:-16px;
   margin-top:-20px;
+}
+
+/* ---------------------- 인포 ---------------------- */
+#list .list_area .section .info_my {
+  position:relative;
+  width:390px;
+  height:584px;
+  background:#fff;
+  margin:10px auto;
+}
+
+#list .list_area .section .info_my .picture_info {
+  position:absolute;
+  left:50%; 
+  transform: translate(-50%,0);
+  top:15%;
+  text-align:center;
+}
+
+#list .list_area .section .info_my .picture_info img {
+  width:120px; height:120px;
+}
+
+#list .list_area .section .info_my .picture_info span {
+  display:inline-block;
+  margin-top:10px;
+}
+
+#list .list_area .section .info_my .btn_logout {
+  position:absolute;
+  border-radius: 50px;
+  background-color: rgb( 255, 111, 65 );
+  opacity: 0.859;
+  width: 318px;
+  height: 52px;
+  left:50%; 
+  transform: translate(-50%,0);
+  top:50%;
+  text-align:center;
+  cursor:pointer;
+  letter-spacing:1px;
+}
+
+#list .list_area .section .info_my .btn_chpw {
+  position:absolute;
+  border-radius: 50px;
+  background-color: rgb( 255, 111, 65 );
+  opacity: 0.859;
+  width: 318px;
+  height: 52px;
+  left:50%; 
+  transform: translate(-50%,0);
+  top:63%;
+  text-align:center;
+  cursor:pointer;
+  letter-spacing:1px;
+}
+
+#list .list_area .section .info_my a {
+  margin-top:16px;
+}
+
+/* ---------------------- 폴더 ---------------------- */
+#list .list_area .section .add_folder {
+  width:390px;
+  margin:10px auto;
+}
+
+#list .list_area .section .add_folder li {
+  position:relative;
+  float:left;
+  width:390px;
+  height:90px;
+  background:#fff;
+  box-sizing:border-box;
+  font-size:14px;
+  font-family: 'Nanum Gothic', serif;
+  color: rgb( 116, 116, 116 );
+  -moz-transform: scale(0.99, 1);
+  -webkit-transform: scale(0.99, 1);
+  -ms-transform: scale(0.99, 1);
+  font-weight:bold;
+  margin-bottom:10px;
+  box-shadow: 2.5px 4.33px 7px 0px rgb( 213,213,213  );
+}
+
+#list .list_area .section .add_folder .add_list .add_title {
+  position:absolute;
+  left:30px;
+  top:37px;
+}
+
+#list .list_area .section .add_folder .add_list .add_hit {
+  position:absolute;
+  right:30px;
+  top:37px;
+}
+
+#list .list_area .section .add_folder .btn_add {
+  background-color:rgb(213,213,213);
+  box-shadow:none;
+}
+
+/* ---------------------- 설정 ---------------------- */
+#list .list_area .section .list_setting {
+  width:390px;
+  margin:10px auto;
+  box-shadow: 4px 6.928px 18px 1px rgb( 21, 11, 8 );
+}
+
+#list .list_area .section .list_setting li {
+  position:relative;
+  float:left;
+  width:390px;
+  height:70px;
+  background:#fff;
+  box-sizing:border-box;
+  font-size:14px;
+  padding:25px 0 0 45px;
+  border-bottom:1px solid gray;
+  font-family: 'Nanum Gothic', serif;
+  color: rgb( 116, 116, 116 );
+  -moz-transform: scale(0.99, 1);
+  -webkit-transform: scale(0.99, 1);
+  -ms-transform: scale(0.99, 1);
+  font-weight:bold;
+}
+
+#list .list_area .section .list_setting li:nth-child(3n) {
+  padding:12px 0 0 45px;
+}
+
+#list .list_area .section .list_setting li span {
+  font-size:10px;
+  color: rgb( 197, 197, 197 );
+  line-height: 1.5;
+  -moz-transform: scale(0.99, 1);
+  -webkit-transform: scale(0.99, 1);
+  -ms-transform: scale(0.99, 1);
+  font-family: 'Nanum Gothic', serif;
+  display:inline-block;
+  margin-top:5px;
+}
+#list .list_area .section .list_setting li img {
+  position:absolute;
+  right:30px;
+  top:27px;
 }
