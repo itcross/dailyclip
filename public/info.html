@@ -10,6 +10,48 @@
 <meta property="og:url" content="">
 <link rel="stylesheet" href="css/common.css" type="text/css" />
 <link rel="stylesheet" href="css/style.css" type="text/css" />
+<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js" ></script>
+<script>
+	//Initialize Firebase
+	// 파이어베이스 접근 설정
+	var config = {
+	  apiKey: "AIzaSyBlRXKU6mf9KGW1cqUNThHuQu825qKd0MA",
+	  authDomain: "dailyclip-b64d3.firebaseapp.com",
+	  databaseURL: "https://dailyclip-b64d3.firebaseio.com",
+	  projectId: "dailyclip-b64d3",
+	  storageBucket: "dailyclip-b64d3.appspot.com",
+	  messagingSenderId: "753746341919"
+	};
+	
+	firebase.initializeApp(config);
+	
+	var database = firebase.database();
+	var email;
+	
+	firebase.auth().onAuthStateChanged(function(user) {
+	 	if(user){
+	 		email = user.email;
+	 		$('#loginEmail').text(email);
+	 	}
+	});
+	
+	//로그아웃처리 사용자 로그인 세션 정리
+	function fnLogOut(){
+		firebase.auth().signOut().then(function() {
+			location.href="index.html";
+		})
+	}
+	
+	//로그인 패스워드 변경을위한 메일 전송
+	function fnNewPwd(){
+		firebase.auth().sendPasswordResetEmail(email).then(function() {
+			console.log('이메일을 전송하였습니다.');
+		}, function(error) {
+		});
+	}
+</script>
+
 <title>DAILY CLIP</title>
 </head>
 <body >
@@ -24,10 +66,10 @@
 				<div class="info_my">
 					<div class="picture_info">
 					<img src="images/bg.jpg" alt="">
-					<span class="email_info">CA@gmail.com</span>
+					<span class="email_info" id="loginEmail"></span>
 					</div>
-					<div class="btn_logout"><a href="#"><span>로그아웃</span></a></div>
-					<div class="btn_chpw"><a href="#"><span>비밀번호 변경</span></a></div>
+					<div class="btn_logout"><a href="#" onclick="fnLogOut();return false"><span>로그아웃</span></a></div>
+					<div class="btn_chpw"><a href="#" onclick="fnNewPwd();return false"><span>비밀번호 변경</span></a></div>
 				</div>
 			</div>
 			<div class="bottom_menu">
