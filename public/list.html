@@ -34,6 +34,7 @@
 	firebase.auth().onAuthStateChanged(function(user) {
 	 	if(user){
 	 		userEmail = user.email;
+	 		fnLinkLoad(user.uid); //사용자 고유의 아이디를 사용한다.
 	 	}
 	});
 	
@@ -41,28 +42,33 @@
 	var articleNum = 0;					//클립 갯수
 	var articleText = "";				//article html 
 	
+
 	//해당 유저의 모든 클립 출력
-	databaseRef.on('value', snapshot => {
-		snapshot.forEach(function(childSnapshot){
-			if(childSnapshot.val().email == userEmail){
-				++articleNum;
-				articleText += "<div class='article'><div class='img_thumb'></div>";
-				articleText += "<div class='content'>";
-				articleText += "<h2 class='title_article' id='title_article" + articleNum + "'>";
-				articleText	+= childSnapshot.val().title + "<h2>";
-				articleText += "<p class='content_article' id='content_article" + articleNum + "'>";
-				articleText += childSnapshot.val().description + "</p>";
-				articleText += "<div class='source_area'>";
-				articleText += "<span class='date_article' id='date_article" + articleNum + "'>";
-				articleText += childSnapshot.val().savedDate + "</span>";
-				articleText += "<span class='addr_article' id='addr_article" + articleNum + "'>";
-				articleText += childSnapshot.val().url + "</span></div>";
-				articleText += "<span class='chk_list'><a href='#'><img src='images/chk_list.png' alt=''></a></span>";
-				articleText += "</div></div>";
-			}
-		})
-		$('.section').html(articleText);			//section에 추가
-	});
+	function fnLinkLoad(userID){
+		databaseRef.child(userID).on('value', snapshot => {
+			snapshot.forEach(function(childSnapshot){
+
+					++articleNum;
+					articleText += "<div class='article'><div class='img_thumb'></div>";
+					articleText += "<div class='content'>";
+					articleText += "<h2 class='title_article' id='title_article" + articleNum + "'>";
+					articleText	+= childSnapshot.val().title + "<h2>";
+					articleText += "<p class='content_article' id='content_article" + articleNum + "'>";
+					articleText += childSnapshot.val().description + "</p>";
+					articleText += "<div class='source_area'>";
+					articleText += "<span class='date_article' id='date_article" + articleNum + "'>";
+					articleText += childSnapshot.val().savedDate + "</span>";
+					articleText += "<span class='addr_article' id='addr_article" + articleNum + "'>";
+					articleText += childSnapshot.val().url + "</span></div>";
+					articleText += "<span class='chk_list'><a href='#'><img src='images/chk_list.png' alt=''></a></span>";
+					articleText += "</div></div>";
+				
+			})
+			$('.section').html(articleText);	
+					//section에 추가
+		});
+	}
+
 </script>
 </head>
 <body >

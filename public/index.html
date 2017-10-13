@@ -47,6 +47,32 @@
 	 		return false;
 	 	}
 	});
+
+  function fnAutoLogin(){
+  	var loginId = App.getUserId();
+  	var loginPw = App.getUserPw();
+
+  	firebase.auth().signInWithEmailAndPassword(loginId, loginPw)
+    .then(function(){
+    	location.href="list.html";
+    }).catch(function(error) {
+		// Handle Errors here.
+		var errorCode = error.code;
+		var errorMessage = error.message;
+		// [START_EXCLUDE]
+		if (errorCode === 'auth/wrong-password') {
+		  alert('패스워드가 틀렸습니다. 다시확인해주세요');
+		  $('#loginPw').val('');
+		  $('#loginPw').focus();
+		  return false;
+		} else {
+		  alert(errorMessage);
+		}
+		console.log(error);
+		// [END_EXCLUDE]
+    }); 
+
+  }
   
   function fnLogin(){
 	var loginId = $('#loginId').val();
@@ -85,7 +111,7 @@
   }
 </script>
 </head>
-<body >
+<body onLoad = "fnAutoLogin()">
 <div id="wrap">
 	<div id="main">
 		<div class="login_area">
