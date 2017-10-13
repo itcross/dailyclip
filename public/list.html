@@ -11,6 +11,59 @@
 <link rel="stylesheet" href="css/common.css" type="text/css" />
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 <title>DAILY CLIP</title>
+<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+<script src="https://code.jquery.com/jquery-latest.min.js" ></script>
+<script>
+	//Initialize Firebase
+	// 파이어베이스 접근 설정
+	var config = {
+	  apiKey: "AIzaSyBlRXKU6mf9KGW1cqUNThHuQu825qKd0MA",
+	  authDomain: "dailyclip-b64d3.firebaseapp.com",
+	  databaseURL: "https://dailyclip-b64d3.firebaseio.com",
+	  projectId: "dailyclip-b64d3",
+	  storageBucket: "dailyclip-b64d3.appspot.com",
+	  messagingSenderId: "753746341919"
+	};
+	
+	firebase.initializeApp(config);
+	
+	var database = firebase.database();
+	var databaseRef = firebase.database().ref('list/');				//list 참조
+	var userEmail;
+	
+	firebase.auth().onAuthStateChanged(function(user) {
+	 	if(user){
+	 		userEmail = user.email;
+	 	}
+	});
+	
+	
+	var articleNum = 0;					//클립 갯수
+	var articleText = "";				//article html 
+	
+	//해당 유저의 모든 클립 출력
+	databaseRef.on('value', snapshot => {
+		snapshot.forEach(function(childSnapshot){
+			if(childSnapshot.val().email == userEmail){
+				++articleNum;
+				articleText += "<div class='article'><div class='img_thumb'></div>";
+				articleText += "<div class='content'>";
+				articleText += "<h2 class='title_article' id='title_article" + articleNum + "'>";
+				articleText	+= childSnapshot.val().title + "<h2>";
+				articleText += "<p class='content_article' id='content_article" + articleNum + "'>";
+				articleText += childSnapshot.val().description + "</p>";
+				articleText += "<div class='source_area'>";
+				articleText += "<span class='date_article' id='date_article" + articleNum + "'>";
+				articleText += childSnapshot.val().savedDate + "</span>";
+				articleText += "<span class='addr_article' id='addr_article" + articleNum + "'>";
+				articleText += childSnapshot.val().url + "</span></div>";
+				articleText += "<span class='chk_list'><a href='#'><img src='images/chk_list.png' alt=''></a></span>";
+				articleText += "</div></div>";
+			}
+		})
+		$('.section').html(articleText);			//section에 추가
+	});
+</script>
 </head>
 <body >
 <div id="wrap">
@@ -22,78 +75,6 @@
 				<span class="btn_search"><img src="images/btn_search.png" alt=""></span>
 			</div>
 			<div class="section">
-				<div class="article">
-					<div class="img_thumb"></div>
-					<div class="content">
-						<h2 class="title_article">[칼럽] 혁신을 어떻게 규제할 것인가<h2>
-						<p class="content_article">혁신의 시작은 혁신의 시작은 혁신의 시작은 혁신의 시작은혁신의 시작은 혁신의 시작은 혁신의 시작은 혁신의 시작은</p>
-						<div class="source_area">
-							<span class="date_article">2017. 09. 08</span>
-							<span class="addr_article">naver.com</span>
-						</div>
-						<span class="chk_list"><a href="#"><img src="images/chk_list.png" alt=""></a></span>
-					</div>
-				</div>
-				<div class="article">
-					<div class="img_thumb"></div>
-					<div class="content">
-						<h2 class="title_article">[칼럽] 혁신을 어떻게 규제할 것인가<h2>
-						<p class="content_article">혁신의 시작은 혁신의 시작은 혁신의 시작은 혁신의 시작은혁신의 시작은 혁신의 시작은 혁신의 시작은 혁신의 시작은</p>
-						<div class="source_area">
-							<span class="date_article">2017. 09. 08</span>
-							<span class="addr_article">naver.com</span>
-						</div>
-						<span class="chk_list"><a href="#"><img src="images/chk_list.png" alt=""></a></span>
-					</div>
-				</div>
-				<div class="article">
-					<div class="img_thumb"></div>
-					<div class="content">
-						<h2 class="title_article">[칼럽] 혁신을 어떻게 규제할 것인가<h2>
-						<p class="content_article">혁신의 시작은 혁신의 시작은 혁신의 시작은 혁신의 시작은혁신의 시작은 혁신의 시작은 혁신의 시작은 혁신의 시작은</p>
-						<div class="source_area">
-							<span class="date_article">2017. 09. 08</span>
-							<span class="addr_article">naver.com</span>
-						</div>
-						<span class="chk_list"><a href="#"><img src="images/chk_list.png" alt=""></a></span>
-					</div>
-				</div>
-				<div class="article">
-					<div class="img_thumb"></div>
-					<div class="content">
-						<h2 class="title_article">[칼럽] 혁신을 어떻게 규제할 것인가<h2>
-						<p class="content_article">혁신의 시작은 혁신의 시작은 혁신의 시작은 혁신의 시작은혁신의 시작은 혁신의 시작은 혁신의 시작은 혁신의 시작은</p>
-						<div class="source_area">
-							<span class="date_article">2017. 09. 08</span>
-							<span class="addr_article">naver.com</span>
-						</div>
-						<span class="chk_list"><a href="#"><img src="images/chk_list.png" alt=""></a></span>
-					</div>
-				</div>
-				<div class="article">
-					<div class="img_thumb"></div>
-					<div class="content">
-						<h2 class="title_article">[칼럽] 혁신을 어떻게 규제할 것인가<h2>
-						<p class="content_article">혁신의 시작은 혁신의 시작은 혁신의 시작은 혁신의 시작은혁신의 시작은 혁신의 시작은 혁신의 시작은 혁신의 시작은</p>
-						<div class="source_area">
-							<span class="date_article">2017. 09. 08</span>
-							<span class="addr_article">naver.com</span>
-						</div>
-						<span class="chk_list"><a href="#"><img src="images/chk_list.png" alt=""></a></span>
-					</div>
-				</div>
-				<div class="article">
-					<div class="img_thumb"></div>
-					<div class="content">
-						<h2 class="title_article">[칼럽] 혁신을 어떻게 규제할 것인가<h2>
-						<p class="content_article">혁신의 시작은 혁신의 시작은 혁신의 시작은 혁신의 시작은혁신의 시작은 혁신의 시작은 혁신의 시작은 혁신의 시작은</p>
-						<div class="source_area">
-							<span class="date_article">2017. 09. 08</span>
-							<span class="addr_article">naver.com</span>
-						</div>
-						<span class="chk_list"><a href="#"><img src="images/chk_list.png" alt=""></a></span>
-					</div>
-				</div>
 			</div>
 			<div class="bottom_menu">
 				<ul class="icon_bottom">
