@@ -24,24 +24,24 @@
 	  storageBucket: "dailyclip-b64d3.appspot.com",
 	  messagingSenderId: "753746341919"
 	};
-	
+
 	firebase.initializeApp(config);
-	
+
 	var database = firebase.database();
 	var databaseRef = firebase.database().ref('list/');				//list 참조
 	var userEmail;
-	
+
 	firebase.auth().onAuthStateChanged(function(user) {
 	 	if(user){
 	 		userEmail = user.email;
 	 		fnLinkLoad(user.uid); //사용자 고유의 아이디를 사용한다.
 	 	}
 	});
-	
-	
+
+
 	var articleNum = 0;					//클립 갯수
-	var articleText = "";				//article html 
-	
+	var articleText = "";				//article html
+
 
 	//해당 유저의 모든 클립 출력
 	function fnLinkLoad(userID){
@@ -62,9 +62,9 @@
 					articleText += childSnapshot.val().url + "</span></div>";
 					articleText += "<span class='chk_list'><a href='#'><img src='images/chk_list.png' alt=''></a></span>";
 					articleText += "</div></div>";
-				
+
 			})
-			$('.section').html(articleText);	
+			$('.section').html(articleText);
 					//section에 추가
 		});
 	}
@@ -86,8 +86,8 @@
 				<ul class="icon_bottom">
 					<li class="home"><a href="#"><img src="images/btn_home.png" alt=""></a></li>
 					<li class="bookmark"><a href="#"><img src="images/btn_bookmark.png" alt=""></a></li>
-					<li class="folder"><a href="#"><img src="images/btn_folder.png" alt=""></a></li>
-					<li class="setting"><a href="#"><img src="images/btn_setting.png" alt=""></a></li>
+					<li class="folder"><a href="folder.html"><img src="images/btn_folder.png" alt=""></a></li>
+					<li class="setting"><a href="set_page.html"><img src="images/btn_setting.png" alt=""></a></li>
 				</ul>
 			</div>
 			<div class="add_article">
