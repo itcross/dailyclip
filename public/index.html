@@ -30,29 +30,40 @@
 	
 	var database = firebase.database();
 
+
 	//현재 로그인한 사용자 가져오기
 	firebase.auth().onAuthStateChanged(function(user) {
 	 	if(user){
-	 		 var displayName = user.displayName;
-	          var email = user.email;
-	          var emailVerified = user.emailVerified;
-	          var photoURL = user.photoURL;
-	          var isAnonymous = user.isAnonymous;
-	          var uid = user.uid;
-	          var providerData = user.providerData;
-	          
-	          //location.href="list.html";
-	          location.href="info.html";
+	 		try{
+	 			fnAutoLogin(App.getUserId(),App.getUserPw());
+	 		}catch(err){
+	 			if(err.name =="ReferenceError"){
+	 				alert("NO!");
+	 			  var displayName = user.displayName;
+		          var email = user.email;
+		          var emailVerified = user.emailVerified;
+		          var photoURL = user.photoURL;
+		          var isAnonymous = user.isAnonymous;
+		          var uid = user.uid;
+		          var providerData = user.providerData;
+
+		          //location.href="list.html";
+		          location.href="info.html";
+	 			}
+	 		}
 	 	}else{
 	 		return false;
 	 	}
 	});
 
-  function fnAutoLogin(){
-  	var loginId = App.getUserId();
-  	var loginPw = App.getUserPw();
+  function fnAutoLogin(userId, userPw){
 
-  	firebase.auth().signInWithEmailAndPassword(loginId, loginPw)
+  	if(userId == null || userPw == null){
+  		return;
+  	}
+  	alert("앱 로그인");
+
+  	firebase.auth().signInWithEmailAndPassword(userId, userPw)
     .then(function(){
     	location.href="list.html";
     }).catch(function(error) {
@@ -62,6 +73,7 @@
 		// [START_EXCLUDE]
 		if (errorCode === 'auth/wrong-password') {
 		  alert('패스워드가 틀렸습니다. 다시확인해주세요');
+		  App.setUserLoginData(null,null);
 		  $('#loginPw').val('');
 		  $('#loginPw').focus();
 		  return false;
@@ -82,7 +94,15 @@
     //이메일과 패스워드를 사용해 로그인확인
     firebase.auth().signInWithEmailAndPassword(loginId, loginPw)
     .then(function(){
-    	location.href="list.html";
+    	try{
+    		App.setUserLoginData(loginId,loginPw);
+    	}catch(err){
+    		if(err.name =="ReferenceError"){
+    			alert("웹 로그인");
+    		}
+    	}finally{
+    		location.href="list.html";
+    	}
     })
     .catch(function(error) {
 		// Handle Errors here.
@@ -90,6 +110,14 @@
 		var errorMessage = error.message;
 		// [START_EXCLUDE]
 		if (errorCode === 'auth/wrong-password') {
+			try{
+    		  App.setUserLoginData(null,null);
+    		}catch(err){
+    			if(err.name =="ReferenceError"){
+
+    			}
+    		}
+		
 		  alert('패스워드가 틀렸습니다. 다시확인해주세요');
 		  $('#loginPw').val('');
 		  $('#loginPw').focus();
@@ -111,7 +139,7 @@
   }
 </script>
 </head>
-<body onLoad = "fnAutoLogin()">
+<body onLoad>
 <div id="wrap">
 	<div id="main">
 		<div class="login_area">

@@ -69,29 +69,35 @@
     firebase.initializeApp(config);
 
     var r = firebase.database().ref('folder/');
+    var userId;
     var email;
 
     firebase.auth().onAuthStateChanged(function(user) {
          if(user){
              email = user.email;
+             userId = user.uid;
+             //DB 구조 변경
+             updateList();
+
          }
     });
 
     var updateList = function(){
         $(".add_folder").empty();
         $("#del").empty();
-        r.on('value',function(sn){
+        if(!userId){
+            return;
+        }
+        r.child(userId).on('value',function(sn){
             var s = 0;
             sn.forEach(function(snf){
-                if(snf.val().user == email){
-                    $(".add_folder").append(
+                  $(".add_folder").append(
                         "<li class='add_list'>"
                             +"<span class='add_title'>"+snf.val().name+"</span>"
                             +"<span class='add_hit'>?</span>"
                         +"</li>");
                     $("#del").append("<span id='del"+s+"'>"+snf.val().name+"</span><br>");
                     s++;
-                }
             });
         });
     }
@@ -154,13 +160,11 @@
                 return false;
             }
 
-            r.on('value',function(sn){
+            r.child(userId).on('value',function(sn){
                 sn.forEach(function(snf){
-                    if(snf.val().user == email){
-                        if(snf.val().name == fname){
-                            exist = 1;
-                        }
-                    }
+                    if(snf.val().name == fname){
+                        exist = 1;
+                    } 
                 });
             });
 
@@ -169,11 +173,10 @@
                 return false;
             }
 
-            var fkey = r.push().key;
+            var fkey = r.child(userId).push().key;
 
-            r.child(fkey).update({
+            r.child(userId).child(fkey).update({
                 name : fname,
-                user : email
             })
 
             updateList();
@@ -210,11 +213,11 @@
                 return false;
             }
 
-            r.on('value',function(sn){
+            r.child(userId).on('value',function(sn){
                 sn.forEach(function(snf){
                     $.each(delList,function(i){
-                        if(snf.val().user == email && snf.val().name == delList[i]){
-                            r.child(snf.key).remove();
+                        if(snf.val().name == delList[i]){
+                            r.child(userId).child(snf.key).remove();
                         }
                     });
                 });

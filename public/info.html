@@ -39,8 +39,15 @@
 	//로그아웃처리 사용자 로그인 세션 정리
 	function fnLogOut(){
 		firebase.auth().signOut().then(function() {
+			try{
+			  App.setUserLoginData(null,null);
+			}catch(err){
+
+			}
+		    
 			location.href="index.html";
 		})
+
 	}
 
 	//로그인 패스워드 변경을위한 메일 전송
