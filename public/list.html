@@ -29,46 +29,128 @@
 
 	var database = firebase.database();
 	var databaseRef = firebase.database().ref('list/');				//list 참조
-	var userEmail;
+	var userEmail;													//사용자 이메일
+	var userId;														//사용자 고유 아이디
+	var articleNum = 0;												//클립 갯수
+	var articleText = "";											//article html
 
+	
 	firebase.auth().onAuthStateChanged(function(user) {
 	 	if(user){
 	 		userEmail = user.email;
+			userId = user.uid;
 	 		fnLinkLoad(user.uid); //사용자 고유의 아이디를 사용한다.
 	 	}
 	});
-
-
-	var articleNum = 0;					//클립 갯수
-	var articleText = "";				//article html
-
 
 	//해당 유저의 모든 클립 출력
 	function fnLinkLoad(userID){
 		databaseRef.child(userID).on('value', snapshot => {
 			snapshot.forEach(function(childSnapshot){
-
-					++articleNum;
-					articleText += "<div class='article'><div class='img_thumb'></div>";
-					articleText += "<div class='content'>";
-					articleText += "<h2 class='title_article' id='title_article" + articleNum + "'>";
-					articleText	+= childSnapshot.val().title + "<h2>";
-					articleText += "<p class='content_article' id='content_article" + articleNum + "'>";
-					articleText += childSnapshot.val().description + "</p>";
-					articleText += "<div class='source_area'>";
-					articleText += "<span class='date_article' id='date_article" + articleNum + "'>";
-					articleText += childSnapshot.val().savedDate + "</span>";
-					articleText += "<span class='addr_article' id='addr_article" + articleNum + "'>";
-					articleText += childSnapshot.val().url + "</span></div>";
-					articleText += "<span class='chk_list'><a href='#'><img src='images/chk_list.png' alt=''></a></span>";
-					articleText += "</div></div>";
-
+					
+				++articleNum;
+					
+				articleText += "<div class='article' onclick='fnLinkClick(" + '"' + childSnapshot.val().url + '"' + ");'>";
+				articleText += "<div class='img_thumb'></div><div class='content'>";
+				articleText += "<h2 class='title_article' id='title_article" + articleNum + "'>";
+				articleText	+= childSnapshot.val().title + "<h2>";
+				articleText += "<p class='content_article' id='content_article" + articleNum + "'>";
+				articleText += childSnapshot.val().description + "</p>";
+				articleText += "<div class='source_area'>";
+				articleText += "<span class='date_article' id='date_article" + articleNum + "'>";
+				articleText += childSnapshot.val().savedDate + "</span>";
+				articleText += "<span class='addr_article' id='addr_article" + articleNum + "'>";
+				articleText += childSnapshot.val().url + "</span></div>";
+					
+				if(childSnapshot.val().bookMark == 'N'){
+					articleText += "<span class='chk_list'><a href='#'>";
+					articleText += "<img id='imgChk' src='images/chk_list.png' alt=''";
+					articleText += "onclick='fnLinkCheck(" + '"' + childSnapshot.key + '"' + ");'></a></span>";
+				}
+				else{
+					articleText += "<span class='chk_list bookmark'><a href='#'>";
+					articleText += "<img id='imgChk' src='images/chk_list_2.png' alt=''"; 
+					articleText += "onclick='fnLinkCheck(" + '"' + childSnapshot.key + '"' + ");'></a></span>";
+				}
+					
+				articleText += "</div></div>";
 			})
-			$('.section').html(articleText);
-					//section에 추가
+			//section에 추가
+			$('.section').html(articleText);			
 		});
 	}
-
+	
+	//링크 클릭시 이벤트
+	function fnLinkClick(url){
+	
+		//즐겨찾기 버튼을 클릭했다면 이벤트 무효화
+		if($('.chk_list').hasClass('clicked')){
+			$('.chk_list').removeClass("clicked");
+		}
+		else{
+		//링크 클릭시 해당 링크로 이동
+			location.href = url;
+		}
+	}
+	
+	//즐겨찾기 클릭시 이벤트
+	function fnLinkCheck(key){
+	
+		//링크 버튼 클릭과 즐겨찾기 버튼 클릭 구분
+		$('.chk_list').addClass("clicked");
+		
+		//즐겨찾기된 링크일 경우, 즐겨찾기 해제
+		if($('.chk_list').hasClass('bookmark')){
+		
+			$('#imgChk').attr('src', 'images/chk_list.png');
+			$('.chk_list').removeClass("bookmark");
+			
+			databaseRef.child(userId).child(key).on('value', snapshot => {
+				
+				var data = {
+					bookMark : 'N',
+					description : snapshot.val().description,
+					fname : snapshot.val().fname,
+					savedDate : snapshot.val().savedDate,
+					title : snapshot.val().title,
+					url : snapshot.val().url
+				}
+				
+				var updates = {};
+				updates['/list/' + userId + '/' + key] = data;
+				firebase.database().ref().update(updates);		
+			});
+		}
+		else{
+		//그렇지 않을 경우, 즐겨찾기 설정
+			$('.chk_list').addClass("bookmark");
+			$('#imgChk').attr('src', 'images/chk_list_2.png');
+			
+			databaseRef.child(userId).child(key).on('value', snapshot => {
+				
+				var data = {
+					bookMark : 'Y',
+					description : snapshot.val().description,
+					fname : snapshot.val().fname,
+					savedDate : snapshot.val().savedDate,
+					title : snapshot.val().title,
+					url : snapshot.val().url
+				}
+				
+				var updates = {};
+				updates['/list/' + userId + '/' + key] = data;
+				firebase.database().ref().update(updates);		
+			});
+		}
+		//화면 새로고침
+		location.reload();
+	}
+	
+	//링크 삭제(삭제 방법 정해야 함)
+	function fnLinkRemove(key){
+		databaseRef().child(userId).child(key).remove();
+		location.reload();
+	}
 </script>
 </head>
 <body >
@@ -84,8 +166,8 @@
 			</div>
 			<div class="bottom_menu">
 				<ul class="icon_bottom">
-					<li class="home"><a href="#"><img src="images/btn_home.png" alt=""></a></li>
-					<li class="bookmark"><a href="#"><img src="images/btn_bookmark.png" alt=""></a></li>
+					<li class="home"><a href="list.html"><img src="images/btn_home.png" alt=""></a></li>
+					<li class="bookmark"><a href="bookmark_list.html"><img src="images/btn_bookmark.png" alt=""></a></li>
 					<li class="folder"><a href="folder.html"><img src="images/btn_folder.png" alt=""></a></li>
 					<li class="setting"><a href="set_page.html"><img src="images/btn_setting.png" alt=""></a></li>
 				</ul>
