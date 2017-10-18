@@ -10,6 +10,7 @@
 <meta property="og:url" content="">
 <link rel="stylesheet" href="css/common.css" type="text/css" />
 <link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/style_list.css" type="text/css" />
 <title>DAILY CLIP</title>
 <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
 <script src="https://code.jquery.com/jquery-latest.min.js" ></script>
@@ -28,34 +29,45 @@
 	firebase.initializeApp(config);
 
 	var database = firebase.database();
-	var databaseRef = firebase.database().ref('list/');				//list 참조
-	var userEmail;													//사용자 이메일
-	var userId;														//사용자 고유 아이디
-	var articleNum = 0;												//클립 갯수
-	var articleText = "";											//article html
-
+	var databaseRef = firebase.database().ref('list/');	//list 참조
+	var userEmail;	//사용자 이메일
+	var userId;	//사용자 고유 아이디
 	
 	firebase.auth().onAuthStateChanged(function(user) {
 	 	if(user){
 	 		userEmail = user.email;
 			userId = user.uid;
 	 		fnLinkLoad(user.uid); //사용자 고유의 아이디를 사용한다.
+			//fnLinkAdd();
 	 	}
 	});
 
 	//해당 유저의 모든 클립 출력
 	function fnLinkLoad(userID){
+	
+		var articleNum = 0;	//클립 갯수
+		$(".link_list").empty();	//link_list 내의 내용 삭제
+		
 		databaseRef.child(userID).on('value', snapshot => {
 			snapshot.forEach(function(childSnapshot){
 					
-				++articleNum;
+				++articleNum;	//링크 갯수 추가
+				
+				var articleText = "";
+				var fnClickText = "onclick='fnLinkClick(" + '"' + childSnapshot.val().url + '"' + ");'";
+				
+				articleText += "<div class='article'>";
+				articleText += "<a href='#'><div class='img_thumb'" + fnClickText + "></div></a>";
 					
-				articleText += "<div class='article' onclick='fnLinkClick(" + '"' + childSnapshot.val().url + '"' + ");'>";
-				articleText += "<div class='img_thumb'></div><div class='content'>";
-				articleText += "<h2 class='title_article' id='title_article" + articleNum + "'>";
-				articleText	+= childSnapshot.val().title + "<h2>";
-				articleText += "<p class='content_article' id='content_article" + articleNum + "'>";
-				articleText += childSnapshot.val().description + "</p>";
+				articleText += "<div class='content'>";
+				articleText += "<a href='#'> <h2 class='title_article'"; 
+				articleText += "id='title_article" + articleNum + "' " + fnClickText + ">";
+				articleText	+= childSnapshot.val().title + "<h2></a>";
+					
+				articleText += "<a href='#'><p class='content_article'"; 
+				articleText += "id='content_article" + articleNum + "'" + fnClickText + ">";
+				articleText += childSnapshot.val().description + "</p></a>";
+				
 				articleText += "<div class='source_area'>";
 				articleText += "<span class='date_article' id='date_article" + articleNum + "'>";
 				articleText += childSnapshot.val().savedDate + "</span>";
@@ -64,19 +76,19 @@
 					
 				if(childSnapshot.val().bookMark == 'N'){
 					articleText += "<span class='chk_list'><a href='#'>";
-					articleText += "<img id='imgChk' src='images/chk_list.png' alt=''";
-					articleText += "onclick='fnLinkCheck(" + '"' + childSnapshot.key + '"' + ");'></a></span>";
+					articleText += "<img id='imgChk" + articleNum + "' src='images/chk_list.png' alt=''";
 				}
 				else{
-					articleText += "<span class='chk_list bookmark'><a href='#'>";
-					articleText += "<img id='imgChk' src='images/chk_list_2.png' alt=''"; 
-					articleText += "onclick='fnLinkCheck(" + '"' + childSnapshot.key + '"' + ");'></a></span>";
+					articleText += "<span class='chk_list'><a href='#'>";
+					articleText += "<img id='imgChk" + articleNum + "' class='bookmark' src='images/chk_list_2.png' alt=''";
 				}
-					
-				articleText += "</div></div>";
+				articleText += "onclick='fnLinkCheck(" + '"' + childSnapshot.key + '"' + ',"' + articleNum + '"' + ");'>";	
+				articleText += "</a></span></div></div>";
+				
+				$(".link_list").append(articleText);	//링크목록에 추가
 			})
-			//section에 추가
-			$('.section').html(articleText);			
+			$(".container").css('display','none');	//로딩 지우기
+			$(".link_list").slideDown();	//링크 보이기	
 		});
 	}
 	
@@ -84,72 +96,95 @@
 	function fnLinkClick(url){
 	
 		//즐겨찾기 버튼을 클릭했다면 이벤트 무효화
-		if($('.chk_list').hasClass('clicked')){
+	/*	if($('.chk_list').hasClass('clicked')){
 			$('.chk_list').removeClass("clicked");
 		}
 		else{
 		//링크 클릭시 해당 링크로 이동
 			location.href = url;
-		}
+		}*/
+		location.href = url;
 	}
 	
 	//즐겨찾기 클릭시 이벤트
-	function fnLinkCheck(key){
+	function fnLinkCheck(key, articleId){
 	
 		//링크 버튼 클릭과 즐겨찾기 버튼 클릭 구분
-		$('.chk_list').addClass("clicked");
+		//$('.chk_list').addClass("clicked");
+		
+		//각 북마크의 고유 아이디
+		var imgChkId = "#imgChk" + articleId;
 		
 		//즐겨찾기된 링크일 경우, 즐겨찾기 해제
-		if($('.chk_list').hasClass('bookmark')){
+		if($(imgChkId).hasClass('bookmark')){
 		
-			$('#imgChk').attr('src', 'images/chk_list.png');
-			$('.chk_list').removeClass("bookmark");
+			$(imgChkId).attr('src', 'images/chk_list.png');
+			$(imgChkId).removeClass("bookmark");
 			
+			var data = {};	
 			databaseRef.child(userId).child(key).on('value', snapshot => {
 				
-				var data = {
+				data = {
 					bookMark : 'N',
 					description : snapshot.val().description,
 					fname : snapshot.val().fname,
 					savedDate : snapshot.val().savedDate,
 					title : snapshot.val().title,
 					url : snapshot.val().url
-				}
-				
-				var updates = {};
-				updates['/list/' + userId + '/' + key] = data;
-				firebase.database().ref().update(updates);		
+				}			
 			});
+			
+			var updates = {};
+			updates['/list/' + userId + '/' + key] = data;
+			firebase.database().ref().update(updates);
 		}
 		else{
 		//그렇지 않을 경우, 즐겨찾기 설정
-			$('.chk_list').addClass("bookmark");
-			$('#imgChk').attr('src', 'images/chk_list_2.png');
+			$(imgChkId).addClass("bookmark");
+			$(imgChkId).attr('src', 'images/chk_list_2.png');
 			
+			var data = {};		
 			databaseRef.child(userId).child(key).on('value', snapshot => {
 				
-				var data = {
+				data = {
 					bookMark : 'Y',
 					description : snapshot.val().description,
 					fname : snapshot.val().fname,
 					savedDate : snapshot.val().savedDate,
 					title : snapshot.val().title,
 					url : snapshot.val().url
-				}
-				
-				var updates = {};
-				updates['/list/' + userId + '/' + key] = data;
-				firebase.database().ref().update(updates);		
+				}	
 			});
+			
+			var updates = {};
+			updates['/list/' + userId + '/' + key] = data;
+			firebase.database().ref().update(updates);
 		}
-		//화면 새로고침
-		location.reload();
+		//링크 재출력
+		fnLinkLoad(userId);
 	}
 	
 	//링크 삭제(삭제 방법 정해야 함)
 	function fnLinkRemove(key){
 		databaseRef().child(userId).child(key).remove();
 		location.reload();
+	}
+	
+	//링크 추가
+	function fnLinkAdd(){
+		var newKey = databaseRef.child(userId).push().key;
+		var data = {
+				bookMark : 'N',
+				description : "구글 홈페이지",
+				fname : "",
+				savedDate : "2017.10.18",
+				title : "Google",
+				url : "http://www.google.com"
+			}
+				
+		var updates = {};
+		updates['/list/' + userId + '/' + newKey] = data;
+		firebase.database().ref().update(updates);		
 	}
 </script>
 </head>
@@ -163,10 +198,19 @@
 				<span class="btn_search"><img src="images/btn_search.png" alt=""></span>
 			</div>
 			<div class="section">
+				<!-- loading -->
+                <div class="container">
+                  <div class="box">
+                      <div class="loader10"></div>
+                  </div>
+                </div>
+				<!-- link list -->
+				<ul class="link_list" style="display:none;">
+                </ul>
 			</div>
 			<div class="bottom_menu">
 				<ul class="icon_bottom">
-					<li class="home"><a href="list.html"><img src="images/btn_home.png" alt=""></a></li>
+					<li class="home"><a href="#"><img src="images/btn_home.png" alt=""></a></li>
 					<li class="bookmark"><a href="bookmark_list.html"><img src="images/btn_bookmark.png" alt=""></a></li>
 					<li class="folder"><a href="folder.html"><img src="images/btn_folder.png" alt=""></a></li>
 					<li class="setting"><a href="set_page.html"><img src="images/btn_setting.png" alt=""></a></li>
