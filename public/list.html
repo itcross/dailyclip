@@ -32,7 +32,8 @@
 	var databaseRef = firebase.database().ref('list/');	//list 참조
 	var userEmail;	//사용자 이메일
 	var userId;	//사용자 고유 아이디
-	
+	var articleNum; //클립 갯수
+
 	firebase.auth().onAuthStateChanged(function(user) {
 	 	if(user){
 	 		userEmail = user.email;
@@ -44,36 +45,36 @@
 
 	//해당 유저의 모든 클립 출력
 	function fnLinkLoad(userID){
-	
-		var articleNum = 0;	//클립 갯수
+
+		articleNum = 0;
 		$(".link_list").empty();	//link_list 내의 내용 삭제
-		
+
 		databaseRef.child(userID).on('value', snapshot => {
 			snapshot.forEach(function(childSnapshot){
-					
+
 				++articleNum;	//링크 갯수 추가
-				
+
 				var articleText = "";
 				var fnClickText = "onclick='fnLinkClick(" + '"' + childSnapshot.val().url + '"' + ");'";
-				
+
 				articleText += "<div class='article'>";
 				articleText += "<a href='#'><div class='img_thumb'" + fnClickText + "></div></a>";
-					
+
 				articleText += "<div class='content'>";
-				articleText += "<a href='#'> <h2 class='title_article'"; 
+				articleText += "<a href='#'> <h2 class='title_article'";
 				articleText += "id='title_article" + articleNum + "' " + fnClickText + ">";
 				articleText	+= childSnapshot.val().title + "<h2></a>";
-					
-				articleText += "<a href='#'><p class='content_article'"; 
+
+				articleText += "<a href='#'><p class='content_article'";
 				articleText += "id='content_article" + articleNum + "'" + fnClickText + ">";
 				articleText += childSnapshot.val().description + "</p></a>";
-				
+
 				articleText += "<div class='source_area'>";
 				articleText += "<span class='date_article' id='date_article" + articleNum + "'>";
 				articleText += childSnapshot.val().savedDate + "</span>";
 				articleText += "<span class='addr_article' id='addr_article" + articleNum + "'>";
 				articleText += childSnapshot.val().url + "</span></div>";
-					
+
 				if(childSnapshot.val().bookMark == 'N'){
 					articleText += "<span class='chk_list'><a href='#'>";
 					articleText += "<img id='imgChk" + articleNum + "' src='images/chk_list.png' alt=''";
@@ -82,19 +83,67 @@
 					articleText += "<span class='chk_list'><a href='#'>";
 					articleText += "<img id='imgChk" + articleNum + "' class='bookmark' src='images/chk_list_2.png' alt=''";
 				}
-				articleText += "onclick='fnLinkCheck(" + '"' + childSnapshot.key + '"' + ',"' + articleNum + '"' + ");'>";	
+				articleText += "onclick='fnLinkCheck(" + '"' + childSnapshot.key + '"' + ',"' + articleNum + '"' + ");'>";
 				articleText += "</a></span></div></div>";
-				
+
 				$(".link_list").append(articleText);	//링크목록에 추가
 			})
 			$(".container").css('display','none');	//로딩 지우기
-			$(".link_list").slideDown();	//링크 보이기	
+			$(".link_list").slideDown();	//링크 보이기
 		});
 	}
-	
+
+	//search link
+	function fnLinkSearch(userID, txt){
+		var searchText = "";
+		articleNum = 0;
+		$(".link_list").empty();
+
+		databaseRef.child(userID).on('value',function(sn){
+				sn.forEach(function(childSnapshot){
+						if(childSnapshot.val().title.indexOf(txt) != -1){
+
+								++articleNum;	//링크 갯수 추가
+
+								var fnClickText = "onclick='fnLinkClick(" + '"' + childSnapshot.val().url + '"' + ");'";
+
+								searchText += "<div class='article'>";
+								searchText += "<a href='#'><div class='img_thumb'" + fnClickText + "></div></a>";
+
+								searchText += "<div class='content'>";
+								searchText += "<a href='#'> <h2 class='title_article'";
+								searchText += "id='title_article" + articleNum + "' " + fnClickText + ">";
+								searchText	+= childSnapshot.val().title + "<h2></a>";
+
+								searchText += "<a href='#'><p class='content_article'";
+								searchText += "id='content_article" + articleNum + "'" + fnClickText + ">";
+								searchText += childSnapshot.val().description + "</p></a>";
+
+								searchText += "<div class='source_area'>";
+								searchText += "<span class='date_article' id='date_article" + articleNum + "'>";
+								searchText += childSnapshot.val().savedDate + "</span>";
+								searchText += "<span class='addr_article' id='addr_article" + articleNum + "'>";
+								searchText += childSnapshot.val().url + "</span></div>";
+
+								if(childSnapshot.val().bookMark == 'N'){
+									searchText += "<span class='chk_list'><a href='#'>";
+									searchText += "<img id='imgChk" + articleNum + "' src='images/chk_list.png' alt=''";
+								}
+								else{
+									searchText += "<span class='chk_list'><a href='#'>";
+									searchText += "<img id='imgChk" + articleNum + "' class='bookmark' src='images/chk_list_2.png' alt=''";
+								}
+								searchText += "onclick='fnLinkCheck(" + '"' + childSnapshot.key + '"' + ',"' + articleNum + '"' + ");'>";
+								searchText += "</a></span></div></div>";
+						}
+				});
+				$(".link_list").append(searchText);
+		});
+	}
+
 	//링크 클릭시 이벤트
 	function fnLinkClick(url){
-	
+
 		//즐겨찾기 버튼을 클릭했다면 이벤트 무효화
 	/*	if($('.chk_list').hasClass('clicked')){
 			$('.chk_list').removeClass("clicked");
@@ -105,25 +154,25 @@
 		}*/
 		location.href = url;
 	}
-	
+
 	//즐겨찾기 클릭시 이벤트
 	function fnLinkCheck(key, articleId){
-	
+
 		//링크 버튼 클릭과 즐겨찾기 버튼 클릭 구분
 		//$('.chk_list').addClass("clicked");
-		
+
 		//각 북마크의 고유 아이디
 		var imgChkId = "#imgChk" + articleId;
-		
+
 		//즐겨찾기된 링크일 경우, 즐겨찾기 해제
 		if($(imgChkId).hasClass('bookmark')){
-		
+
 			$(imgChkId).attr('src', 'images/chk_list.png');
 			$(imgChkId).removeClass("bookmark");
-			
-			var data = {};	
+
+			var data = {};
 			databaseRef.child(userId).child(key).on('value', snapshot => {
-				
+
 				data = {
 					bookMark : 'N',
 					description : snapshot.val().description,
@@ -131,9 +180,9 @@
 					savedDate : snapshot.val().savedDate,
 					title : snapshot.val().title,
 					url : snapshot.val().url
-				}			
+				}
 			});
-			
+
 			var updates = {};
 			updates['/list/' + userId + '/' + key] = data;
 			firebase.database().ref().update(updates);
@@ -142,10 +191,10 @@
 		//그렇지 않을 경우, 즐겨찾기 설정
 			$(imgChkId).addClass("bookmark");
 			$(imgChkId).attr('src', 'images/chk_list_2.png');
-			
-			var data = {};		
+
+			var data = {};
 			databaseRef.child(userId).child(key).on('value', snapshot => {
-				
+
 				data = {
 					bookMark : 'Y',
 					description : snapshot.val().description,
@@ -153,23 +202,31 @@
 					savedDate : snapshot.val().savedDate,
 					title : snapshot.val().title,
 					url : snapshot.val().url
-				}	
+				}
 			});
-			
+
 			var updates = {};
 			updates['/list/' + userId + '/' + key] = data;
 			firebase.database().ref().update(updates);
 		}
-		//링크 재출력
-		fnLinkLoad(userId);
+		var textSearch = $(".searchTxt").val();
+		var disPlay = $(".searchTxt").css('display');
+
+		if(textSearch && disPlay != "none"){
+			//search link
+			fnLinkSearch(userId,textSearch);
+		}else{
+			//링크 재출력
+			fnLinkLoad(userId);
+		}
 	}
-	
+
 	//링크 삭제(삭제 방법 정해야 함)
 	function fnLinkRemove(key){
 		databaseRef().child(userId).child(key).remove();
 		location.reload();
 	}
-	
+
 	//링크 추가
 	function fnLinkAdd(){
 		var newKey = databaseRef.child(userId).push().key;
@@ -181,10 +238,10 @@
 				title : "Google",
 				url : "http://www.google.com"
 			}
-				
+
 		var updates = {};
 		updates['/list/' + userId + '/' + newKey] = data;
-		firebase.database().ref().update(updates);		
+		firebase.database().ref().update(updates);
 	}
 </script>
 </head>
@@ -194,8 +251,9 @@
 		<div class="list_area">
 			<div class="top_menu">
 				<h1>DAILYCLIP</h1>
+				<input type="text" style="height: 1.5em;line-height:;margin-top: 1em; display:none;" class="searchTxt" placeholder="제목을 입력하세요">
 				<span class="btn_prev"><img src="images/btn_prev.png" alt=""></span>
-				<span class="btn_search"><img src="images/btn_search.png" alt=""></span>
+				<span class="btn_search" id="search"><img src="images/btn_search.png" alt=""></span>
 			</div>
 			<div class="section">
 				<!-- loading -->
@@ -221,5 +279,32 @@
 		</div>
 	</div>
 </div>
+<script>
+    $(function(){
+
+        $("#search").on('click',function(){
+            var $show = $(".searchTxt").css('display');
+            if($show == 'none'){
+                $(".top_menu > h1").hide();
+                $(".searchTxt").val('').fadeIn();
+            }else{
+                $(".top_menu > h1").fadeIn();
+                $(".searchTxt").hide();
+                fnLinkLoad(userId);
+            }
+        });
+
+        $(".searchTxt").on('keyup',function(){
+            var txt = $(this).val();
+
+            if(txt == ""){
+                fnLinkLoad(userId);
+            }else{
+								fnLinkSearch(userId, txt);
+            }
+        });
+
+    })
+</script>
 </body>
 </html>
