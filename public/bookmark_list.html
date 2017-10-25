@@ -272,6 +272,7 @@
         var txt = $(".searchTxt").val();
 
         if(txt == ""){
+			$(".list_search").empty();	//검색결과 지우기
             fnLinkLoad(userId);
         }
 		else{
@@ -283,12 +284,15 @@
 	function fnLinkSearch(userID, txt){
 	
 		var searchText = "";
+		var resultText = "";	//검색결과 텍스트
+		
 		articleNum = 0;
 		$(".link_list").empty();
+		$(".list_search").empty();	//검색결과 지우기
 
 		databaseRef.child(userID).on('value',function(snapshot){
 			snapshot.forEach(function(childSnapshot){
-				if(childSnapshot.val().title.indexOf(txt) != -1){
+				if((childSnapshot.val().title.indexOf(txt) != -1) && (childSnapshot.val().bookMark == 'Y')){
 
 					++articleNum;	//링크 갯수 추가
 
@@ -329,6 +333,10 @@
 				}
 			});
 			$(".link_list").append(searchText);
+			//검색결과창
+			resultText = "'" + txt + "' 검색결과 " + articleNum + "개";	
+			$(".list_search").text(resultText);
+			$(".search_container").css('display', 'block');
 		});
 	}
 </script>
@@ -350,6 +358,16 @@
                       <div class="loader10"></div>
                   </div>
                 </div>
+				<!-- search result --> 
+				<div class="search_container">
+					<span class="list_search"></span>
+					<span class="select_search">
+						<select name="" id="">
+							<option value="">최신순</option>
+							<option>조회순</option>
+						</select>
+					<span>
+				</div>
 				<!-- link list -->
 				<ul class="link_list" style="display:none;">
                 </ul>

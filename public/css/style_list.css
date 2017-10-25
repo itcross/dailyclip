@@ -160,3 +160,12 @@
 	color:#000; 
 	font-size:2em;
 }
+
+/* search container */
+.search_container {
+	overflow: hidden;
+	display: none;
+}
+.select_search {
+	display: none;
+}

@@ -1,5 +1,5 @@
 ﻿@charset "UTF-8";
-@import url(https://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
 #wrap {
   width:100%;
@@ -51,12 +51,11 @@
 
 #main .login_area .input_box span {
   display:inline-block;
-  background:#fff;
   width:25px;
   height:25px;
   position:absolute;
-  left:25px;
-  top:13px;
+  left:22px;
+  top:10px;
 }
 
 #main .login_area .btn_login {
@@ -175,7 +174,6 @@
 #join .join_area .join_box span {
   position:absolute;
   display:inline-block;
-  background:#fff;
   width:20px;
   height:20px;
   bottom:12px;
@@ -199,6 +197,7 @@
 #join .join_area .select_box select {
   color:rgb( 247, 247, 247 );
   width:110px;
+  height:30px;
   border-style:none;
   line-height:0.5;
   font-size: 12px;
@@ -208,10 +207,10 @@
 
 #join .join_area .select_box span {
   display:inline-block;
-  background:#fff;
   width:20px;
   height:20px;
   left:20px;
+  top:-20px;
 }
 
 #join button {
@@ -402,6 +401,38 @@
   margin-top:-20px;
 }
 
+/* ---------------------- 설정 ---------------------- */
+
+#list .list_area .section .article_main {
+  width:390px;
+  height:580px;
+  background:#fff;
+  margin:10px auto;
+  overflow:auto;
+}
+
+/* ---------------------- 서치 ---------------------- */
+#list .list_area .top_menu input {
+  margin:20px 0 0 5px; 
+  text-align:center; 
+  border-bottom:1px solid #fff; 
+  font-size:15px;
+  padding:5px;
+}
+
+#list .list_area .section .list_search {
+  margin:10px 0 0 15px;
+  display:inline-block;
+  font-size:12px;
+  font-weight:bold;
+}
+#list .list_area .section .select_search {
+  margin:10px 0 0 210px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+
 /* ---------------------- 인포 ---------------------- */
 #list .list_area .section .info_my {
   position:relative;
@@ -499,8 +530,7 @@
 }
 
 #list .list_area .section .add_folder .btn_add {
-  background-color:rgb(213,213,213);
-  box-shadow:none;
+ cursor:pointer;
 }
 
 /* ---------------------- 설정 ---------------------- */

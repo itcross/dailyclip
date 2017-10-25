@@ -111,7 +111,9 @@
 		//링크 클릭시 해당 링크로 이동
 			location.href = url;
 		}*/
+		
 		location.href = url;
+		//location.href = "view.html?link=" + linkKey;
 	}
 
 	/***************************** BOOKMARK LINK *****************************/
@@ -205,7 +207,7 @@
 		window.onclick = function(event) {
 			if (event.target == modal) {
 				modal.style.display = "none";
-			}
+ 			}
 		}
 	}
 	
@@ -321,10 +323,11 @@
 	
 	//링크 검색 커서
 	function fnKeyUpSearch(){
-	
-        var txt = $(".searchTxt").val();
+        
+		var txt = $(".searchTxt").val();
 
         if(txt == ""){
+			$(".list_search").empty();	//검색결과 지우기
             fnLinkLoad(userId);
         }
 		else{
@@ -336,13 +339,15 @@
 	function fnLinkSearch(userID, txt){
 	
 		var searchText = "";
+		var resultText = "";	//검색결과 텍스트
 		articleNum = 0;
 		$(".link_list").empty();
-
+		$(".list_search").empty();
+		
 		databaseRef.child(userID).on('value',function(snapshot){
 			snapshot.forEach(function(childSnapshot){
 				if(childSnapshot.val().title.indexOf(txt) != -1){
-
+					
 					++articleNum;	//링크 갯수 추가
 
 					var fnClickText = "onclick='fnLinkClick(" + '"' + childSnapshot.val().url + '"' + ");'";
@@ -382,6 +387,10 @@
 				}
 			});
 			$(".link_list").append(searchText);
+			//검색결과창
+			resultText = "'" + txt + "' 검색결과 " + articleNum + "개";
+			$(".list_search").text(resultText);
+			$(".search_container").css('display', 'block');
 		});
 	}
 </script>
@@ -403,13 +412,23 @@
                       <div class="loader10"></div>
                   </div>
                 </div>
+				<!-- search result --> 
+				<div class="search_container">
+					<span class="list_search"></span>
+					<span class="select_search">
+						<select name="" id="">
+							<option value="">최신순</option>
+							<option>조회순</option>
+						</select>
+					<span>
+				</div>
 				<!-- link list -->
 				<ul class="link_list" style="display:none;">
                 </ul>
 			</div>
 			<div class="bottom_menu">
 				<ul class="icon_bottom">
-					<li class="home"><a href="#"><img src="images/btn_home.png" alt=""></a></li>
+					<li class="home"><a href="#"><img src="images/btn_folder_home.png" alt=""></a></li>
 					<li class="bookmark"><a href="bookmark_list.html"><img src="images/btn_bookmark.png" alt=""></a></li>
 					<li class="folder"><a href="folder.html"><img src="images/btn_folder.png" alt=""></a></li>
 					<li class="setting"><a href="set_page.html"><img src="images/btn_setting.png" alt=""></a></li>
