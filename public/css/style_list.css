@@ -154,6 +154,9 @@
 	color:#000; 
 	font-size:2em;
 }
+.menuTxt:hover {
+	background-color: #EAEAEA;
+}
 
 /* edit modal css */
 .editTxt {
