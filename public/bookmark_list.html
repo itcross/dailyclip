@@ -63,9 +63,7 @@
 					var fnMenuText = "onclick='fnMenuClick(" + '"' + childSnapshot.key + '"' + ");'";
 
 					articleText += "<div class='article'>";
-					//articleText += "<a href='#'><div class='img_thumb'" + fnClickText + "></div></a>";
-					articleText += "<a href='#'><div class='img_thumb'"; 
-					articleText += "id='img_thumb" + articleNum + "' " + fnMenuText + "></div></a>";
+					articleText += "<a href='#'><div class='img_thumb'" + fnClickText + "></div></a>";
 					
 					articleText += "<div class='content'>";
 					articleText += "<a href='#'> <h2 class='title_article'"; 
@@ -81,6 +79,9 @@
 					articleText += childSnapshot.val().savedDate + "</span>";
 					articleText += "<span class='addr_article' id='addr_article" + articleNum + "'>";
 					articleText += childSnapshot.val().url + "</span></div>";
+					
+					articleText += "<span class='btn_menu'><a href='#' " + fnMenuText + ">";
+					articleText += "<img src='images/chk_list_2.png' alt=''></a></span>";
 					
 					articleText += "<span class='chk_list'><a href='#'>";
 					articleText += "<img id='imgChk" + articleNum + "' class='bookmark' src='images/chk_list_2.png' alt=''";
@@ -300,9 +301,7 @@
 					var fnMenuText = "onclick='fnMenuClick(" + '"' + childSnapshot.key + '"' + ");'";
 
 					searchText += "<div class='article'>";
-					//searchText += "<a href='#'><div class='img_thumb'" + fnClickText + "></div></a>";
-					searchText += "<a href='#'><div class='img_thumb'"; 
-					searchText += "id='img_thumb" + articleNum + "' " + fnMenuText + "></div></a>";
+					searchText += "<a href='#'><div class='img_thumb'" + fnClickText + "></div></a>";
 
 					searchText += "<div class='content'>";
 					searchText += "<a href='#'> <h2 class='title_article'";
@@ -318,6 +317,9 @@
 					searchText += childSnapshot.val().savedDate + "</span>";
 					searchText += "<span class='addr_article' id='addr_article" + articleNum + "'>";
 					searchText += childSnapshot.val().url + "</span></div>";
+					
+					searchText += "<span class='btn_menu'><a href='#' " + fnMenuText + ">";
+					searchText += "<img src='images/chk_list_2.png' alt=''></a></span>";
 
 					if(childSnapshot.val().bookMark == 'N'){
 						searchText += "<span class='chk_list'><a href='#'>";

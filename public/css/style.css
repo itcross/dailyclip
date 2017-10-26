@@ -1,5 +1,5 @@
 ﻿@charset "UTF-8";
-@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(https://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
 #wrap {
   width:100%;
@@ -374,7 +374,14 @@
   bottom:10px;
   width:15px; 
   height:15px; 
-  background:red;
+}
+
+#list .list_area .section .article .content .btn_menu {
+  position:absolute;
+  right:10px; 
+  top:10px;
+  width:15px; 
+  height:15px; 
 }
 
 #list .list_area .bottom_menu {

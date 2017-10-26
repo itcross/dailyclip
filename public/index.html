@@ -38,7 +38,7 @@
 	 			fnAutoLogin(App.getUserId(),App.getUserPw());
 	 		}catch(err){
 	 			if(err.name =="ReferenceError"){
-	 				alert("NO!");
+	 			
 	 			  var displayName = user.displayName;
 		          var email = user.email;
 		          var emailVerified = user.emailVerified;
@@ -61,7 +61,7 @@
   	if(userId == null || userPw == null){
   		return;
   	}
-  	alert("앱 로그인");
+
 
   	firebase.auth().signInWithEmailAndPassword(userId, userPw)
     .then(function(){
@@ -78,7 +78,7 @@
 		  $('#loginPw').focus();
 		  return false;
 		} else {
-		  alert(errorMessage);
+		
 		}
 		console.log(error);
 		// [END_EXCLUDE]
@@ -98,7 +98,7 @@
     		App.setUserLoginData(loginId,loginPw);
     	}catch(err){
     		if(err.name =="ReferenceError"){
-    			alert("웹 로그인");
+    		
     		}
     	}finally{
     		location.href="list.html";

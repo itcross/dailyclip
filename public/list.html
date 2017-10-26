@@ -63,9 +63,7 @@
 				var fnMenuText = "onclick='fnMenuClick(" + '"' + childSnapshot.key + '"' + ");'";
 
 				articleText += "<div class='article'>";
-				//articleText += "<a href='#'><div class='img_thumb'" + fnClickText + "></div></a>";
-				articleText += "<a href='#'><div class='img_thumb'"; 
-				articleText += "id='img_thumb" + articleNum + "' " + fnMenuText + "></div></a>";
+				articleText += "<a href='#'><div class='img_thumb'" + fnClickText + "></div></a>";
 
 				articleText += "<div class='content'>";
 				articleText += "<a href='#'> <h2 class='title_article'";
@@ -82,6 +80,9 @@
 				articleText += "<span class='addr_article' id='addr_article" + articleNum + "'>";
 				articleText += childSnapshot.val().url + "</span></div>";
 
+				articleText += "<span class='btn_menu'><a href='#' " + fnMenuText + ">";
+				articleText += "<img src='images/chk_list_2.png' alt=''></a></span>";
+					
 				if(childSnapshot.val().bookMark == 'N'){
 					articleText += "<span class='chk_list'><a href='#'>";
 					articleText += "<img id='imgChk" + articleNum + "' src='images/chk_list.png' alt=''";
@@ -354,9 +355,7 @@
 					var fnMenuText = "onclick='fnMenuClick(" + '"' + childSnapshot.key + '"' + ");'";
 
 					searchText += "<div class='article'>";
-					//searchText += "<a href='#'><div class='img_thumb'" + fnClickText + "></div></a>";
-					searchText += "<a href='#'><div class='img_thumb'"; 
-					searchText += "id='img_thumb" + articleNum + "' " + fnMenuText + "></div></a>";
+					searchText += "<a href='#'><div class='img_thumb'" + fnClickText + "></div></a>";
 
 					searchText += "<div class='content'>";
 					searchText += "<a href='#'> <h2 class='title_article'";
@@ -373,6 +372,9 @@
 					searchText += "<span class='addr_article' id='addr_article" + articleNum + "'>";
 					searchText += childSnapshot.val().url + "</span></div>";
 
+					searchText += "<span class='btn_menu'><a href='#' " + fnMenuText + ">";
+					searchText += "<img src='images/chk_list_2.png' alt=''></a></span>";
+					
 					if(childSnapshot.val().bookMark == 'N'){
 						searchText += "<span class='chk_list'><a href='#'>";
 						searchText += "<img id='imgChk" + articleNum + "' src='images/chk_list.png' alt=''";
@@ -461,7 +463,7 @@
 					<li class='editTxt'>링크 제목 <input type='text' id='title_edit'/></li>
 					<li class='editTxt'>링크 내용 <input type='text' id='content_edit'/></li>
 				</ul>
-				<input type="submit" class="menuTxt" id="edit_article" value="수정하기" onclick="fnLinkEdit();" style=""/>
+				<input type="submit" class="menuTxt" id="edit_article" value="수정하기" onclick="fnLinkEdit();"/>
 			</form>
 		</div>
     </div>
