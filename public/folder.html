@@ -195,14 +195,14 @@
                   $(".add_folder").append(
                         "<li class='add_list'>"
                             +"<span class='add_title'>"+snf.val().name+"</span>"
-                            +"<span class='add_hit'>?</span>"
+                            +"<span class='add_hit'>0</span>"
                         +"</li>");
                     $("#del").append("<span id='del"+s+"'>"+snf.val().name+"</span><br>");
                     s++;
             });
             $(".container").css('display','none');
             $(".add_folder").slideDown();
-            $(".add_folder_btn").css('display','block');
+            $(".btn_add").css('display','block');
         });
     }
 
@@ -224,13 +224,11 @@
                   </div>
                 </div>
 
-                <ul class="add_folder" style="display:none;">
+                <ul class="add_folder">
                 <!-- 폴더 내용 -->
                 </ul>
-                <!-- 임시 버튼 -->
-                <div class="add_folder_btn" style="text-align:center; color:#000; display:none;">
-                    <button id="addFolder">폴더 추가</button>
-                </div>
+                <!-- 폴더 추가 버튼 -->
+                <img src="images/folder_add.png" id="addFolder" class="btn_add" alt=""> 
             </div>
             <div class="bottom_menu">
                 <ul class="icon_bottom">

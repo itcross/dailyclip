@@ -81,7 +81,7 @@
 				articleText += childSnapshot.val().url + "</span></div>";
 
 				articleText += "<span class='btn_menu'><a href='#' " + fnMenuText + ">";
-				articleText += "<img src='images/chk_list_2.png' alt=''></a></span>";
+				articleText += "<img src='images/btn_menu.png' alt=''></a></span>";
 					
 				if(childSnapshot.val().bookMark == 'N'){
 					articleText += "<span class='chk_list'><a href='#'>";
@@ -89,7 +89,7 @@
 				}
 				else{
 					articleText += "<span class='chk_list'><a href='#'>";
-					articleText += "<img id='imgChk" + articleNum + "' class='bookmark' src='images/chk_list_2.png' alt=''";
+					articleText += "<img id='imgChk" + articleNum + "' class='bookmark' src='images/chk_list_select.png' alt=''";
 				}
 				articleText += "onclick='fnLinkCheck(" + '"' + childSnapshot.key + '"' + ',"' + articleNum + '"' + ");'>";
 				articleText += "</a></span></div></div>";
@@ -153,7 +153,7 @@
 		else{
 		//그렇지 않을 경우, 즐겨찾기 설정
 			$(imgChkId).addClass("bookmark");
-			$(imgChkId).attr('src', 'images/chk_list_2.png');
+			$(imgChkId).attr('src', 'images/chk_list_select.png');
 
 			var data = {};
 			databaseRef.child(userId).child(key).on('value', snapshot => {
@@ -373,7 +373,7 @@
 					searchText += childSnapshot.val().url + "</span></div>";
 
 					searchText += "<span class='btn_menu'><a href='#' " + fnMenuText + ">";
-					searchText += "<img src='images/chk_list_2.png' alt=''></a></span>";
+					searchText += "<img src='images/btn_menu.png' alt=''></a></span>";
 					
 					if(childSnapshot.val().bookMark == 'N'){
 						searchText += "<span class='chk_list'><a href='#'>";
@@ -381,7 +381,7 @@
 					}
 					else{
 						searchText += "<span class='chk_list'><a href='#'>";
-						searchText += "<img id='imgChk" + articleNum + "' class='bookmark' src='images/chk_list_2.png' alt=''";
+						searchText += "<img id='imgChk" + articleNum + "' class='bookmark' src='images/chk_list_select.png' alt=''";
 					}
 			
 					searchText += "onclick='fnLinkCheck(" + '"' + childSnapshot.key + '"' + ',"' + articleNum + '"' + ");'>";
@@ -430,7 +430,7 @@
 			</div>
 			<div class="bottom_menu">
 				<ul class="icon_bottom">
-					<li class="home"><a href="#"><img src="images/btn_folder_home.png" alt=""></a></li>
+					<li class="home"><a href="#"><img src="images/btn_home_over.png" alt=""></a></li>
 					<li class="bookmark"><a href="bookmark_list.html"><img src="images/btn_bookmark.png" alt=""></a></li>
 					<li class="folder"><a href="folder.html"><img src="images/btn_folder.png" alt=""></a></li>
 					<li class="setting"><a href="set_page.html"><img src="images/btn_setting.png" alt=""></a></li>

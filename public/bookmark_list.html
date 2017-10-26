@@ -81,10 +81,10 @@
 					articleText += childSnapshot.val().url + "</span></div>";
 					
 					articleText += "<span class='btn_menu'><a href='#' " + fnMenuText + ">";
-					articleText += "<img src='images/chk_list_2.png' alt=''></a></span>";
+					articleText += "<img src='images/btn_menu.png' alt=''></a></span>";
 					
 					articleText += "<span class='chk_list'><a href='#'>";
-					articleText += "<img id='imgChk" + articleNum + "' class='bookmark' src='images/chk_list_2.png' alt=''";
+					articleText += "<img id='imgChk" + articleNum + "' class='bookmark' src='images/chk_list_select.png' alt=''";
 					articleText += "onclick='fnLinkCheck(" + '"' + childSnapshot.key + '"' + ',"' + articleNum + '"' + ");'>";	
 					articleText += "</a></span></div></div>";
 				
@@ -319,7 +319,7 @@
 					searchText += childSnapshot.val().url + "</span></div>";
 					
 					searchText += "<span class='btn_menu'><a href='#' " + fnMenuText + ">";
-					searchText += "<img src='images/chk_list_2.png' alt=''></a></span>";
+					searchText += "<img src='images/btn_menu.png' alt=''></a></span>";
 
 					if(childSnapshot.val().bookMark == 'N'){
 						searchText += "<span class='chk_list'><a href='#'>";
@@ -327,7 +327,7 @@
 					}
 					else{
 						searchText += "<span class='chk_list'><a href='#'>";
-						searchText += "<img id='imgChk" + articleNum + "' class='bookmark' src='images/chk_list_2.png' alt=''";
+						searchText += "<img id='imgChk" + articleNum + "' class='bookmark' src='images/chk_list_select.png' alt=''";
 					}
 			
 					searchText += "onclick='fnLinkCheck(" + '"' + childSnapshot.key + '"' + ',"' + articleNum + '"' + ");'>";
