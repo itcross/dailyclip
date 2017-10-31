@@ -321,6 +321,7 @@
 }
 
 #list .list_area .section .article .content .title_article  {
+  width:90%;
   font-size: 13px;
   font-weight:bold;
   font-family: 'Nanum Gothic', serif;
@@ -352,6 +353,7 @@
   -moz-transform: scale(0.99, 1);
   -webkit-transform: scale(0.99, 1);
   -ms-transform: scale(0.99, 1);
+  padding-right:5px;
 }
 
 #list .list_area .section .article .content .source_area .addr_article {
@@ -381,7 +383,11 @@
   right:10px; 
   top:10px;
   width:15px; 
-  height:15px; 
+  height:15px;
+}
+
+#list .list_area .section .article .content .btn_menu :active {
+  background:#EAEAEA;
 }
 
 #list .list_area .bottom_menu {

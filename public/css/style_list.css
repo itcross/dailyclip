@@ -24,6 +24,10 @@
     width: 80%;
 }
 
+.modal-content li {
+   padding-bottom: 5px;
+}
+
 /* The Close Button */
 .close {
     color: #aaaaaa;
@@ -37,6 +41,10 @@
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+
+.close:active {
+  background:#EAEAEA;
 }
 
 /* loading css */
@@ -140,7 +148,7 @@
 	100%{background-color: rgba(255, 255, 255, .2);}
 }
 
-/* search css */
+/* Search */
 .searchTxt {
 	height: 1.5em;
 	line-height: ;
@@ -148,27 +156,61 @@
 	display:none;
 }
 
-/* menu(edit & delete) modal css */
-.menuTxt {
-	text-align:center; 
-	color:#000; 
-	font-size:2em;
-}
-.menuTxt:hover {
-	background-color: #EAEAEA;
-}
-
-/* edit modal css */
-.editTxt {
-	color:#000; 
-	font-size:2em;
-}
-
-/* search container */
+/* Search Result */
 .search_container {
 	overflow: hidden;
 	display: none;
 }
 .select_search {
 	display: none;
+}
+
+/* Menu (Edit & Delete) Modal */
+.menu_text {
+	text-align:center; 
+	color:#000; 
+	font-size:2em;
+}
+
+.menu_text:hover,
+.menu_text:active {
+	background-color: #EAEAEA;
+}
+
+/* Edit Modal */
+.edit_text {
+	color: #000; 
+	font-size: 1.7em;
+	margin-bottom: 5px;
+}
+
+.edit_item {
+	width: 100%;
+	margin-bottom: 5px;
+	color: #585858; 
+	background-color: #EAEAEA;
+}
+
+.edit_button {
+	display:inline-block;
+	width: 49%;
+	margin-right: 10px;
+	border-radius:50px;
+	background-color: rgb( 255, 111, 65 );
+	opacity: 0.759;
+	box-shadow: 4px 6.928px 18px 1px rgb( 21, 11, 8 );
+	vertical-align:middle;
+	cursor:pointer;
+	letter-spacing:1px;
+}
+
+.edit_button_text {
+	padding: 5px;
+	color: #FFF; 
+	text-align:center;
+	font-size:1.5em;	
+	font-family: 'Nanum Gothic', serif;
+	-moz-transform: matrix( 1.41126510928624,0,0,1.42552031241033,0,0);
+	-webkit-transform: matrix( 1.41126510928624,0,0,1.42552031241033,0,0);
+	-ms-transform: matrix( 1.41126510928624,0,0,1.42552031241033,0,0);
 }
