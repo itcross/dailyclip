@@ -205,6 +205,10 @@
   padding:0 0 0 15px;
 }
 
+#join .join_area .select_box select option {
+  color:rgb( 0, 0, 0 );
+}
+
 #join .join_area .select_box span {
   display:inline-block;
   width:20px;
@@ -231,7 +235,7 @@
   letter-spacing:1px;
 }
 
-#join button a span {
+#join button span {
   color:#fff;
   line-height:0.5;
   font-size:16px;
@@ -428,7 +432,7 @@
 /* ---------------------- 서치 ---------------------- */
 #list .list_area .top_menu input {
   margin:20px 0 0 5px; 
-  text-align:center; 
+  /*text-align:center; */
   border-bottom:1px solid #fff; 
   font-size:15px;
   padding:5px;
@@ -583,6 +587,12 @@
   -webkit-transform: scale(0.99, 1);
   -ms-transform: scale(0.99, 1);
   font-weight:bold;
+  cursor:pointer;
+}
+
+#list .list_area .section .list_setting li:active {
+  background:#EAEAEA;
+  box-shadow: 4px 6.928px 18px 1px rgb( 116, 116, 116 );
 }
 
 #list .list_area .section .list_setting li:nth-child(3n) {

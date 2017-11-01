@@ -148,11 +148,11 @@
 	100%{background-color: rgba(255, 255, 255, .2);}
 }
 
-/* Search */
+/* -------------- Search -------------- */
+
 .searchTxt {
-	height: 1.5em;
-	line-height: ;
-	margin-top: 1em; 
+	/*height: 1.5em;
+	margin-top: 1em;*/ 
 	display:none;
 }
 
@@ -165,11 +165,13 @@
 	display: none;
 }
 
-/* Menu (Edit & Delete) Modal */
+/* -------------- Menu (Edit & Delete) Modal -------------- */
+
 .menu_text {
 	text-align:center; 
 	color:#000; 
 	font-size:2em;
+	font-family: 'Nanum Gothic', serif;
 }
 
 .menu_text:hover,
@@ -177,24 +179,45 @@
 	background-color: #EAEAEA;
 }
 
-/* Edit Modal */
-.edit_text {
-	color: #000; 
-	font-size: 1.7em;
-	margin-bottom: 5px;
+/* -------------- Edit Modal -------------- */
+
+#edit_ul li {
+	position:relative; 
+	padding: 20px 0 20px 0; 
+	margin-bottom: 15px;
+	border-bottom:1px solid #000;
+	border-radius: 50px;
+	border-style:none;
+	background-color: #D0D0D0;
+	box-shadow: 3px 1.928px 18px 0px rgb( 21, 11, 8 );
 }
 
-.edit_item {
-	width: 100%;
+#edit_ul span {
+	position: relative;
+	display: inline-block;
+	margin-left: 35px;
 	margin-bottom: 5px;
-	color: #585858; 
-	background-color: #EAEAEA;
+	padding: 5px;
+	font-size: 20px;
+	font-family: 'Nanum Gothic', serif;
+	color: rgb( 0, 0, 0 );
+	line-height: 0.5;
 }
 
-.edit_button {
+#edit_ul input {
+	margin-left: 30px;
+	padding:5px;
+	font-size: 20px;
+	font-family: 'Nanum Gothic', serif;
+	-moz-transform: scale(0.99, 1);
+	-webkit-transform: scale(0.99, 1);
+	-ms-transform: scale(0.99, 1);	
+}
+
+#edit_ul .edit_button {
 	display:inline-block;
-	width: 49%;
-	margin-right: 10px;
+	width: 49.3%;
+	margin-right: 5px;
 	border-radius:50px;
 	background-color: rgb( 255, 111, 65 );
 	opacity: 0.759;
@@ -204,11 +227,68 @@
 	letter-spacing:1px;
 }
 
-.edit_button_text {
+#edit_ul .edit_button_text {
 	padding: 5px;
 	color: #FFF; 
 	text-align:center;
-	font-size:1.5em;	
+	font-size:17px;	
+	font-family: 'Nanum Gothic', serif;
+	-moz-transform: matrix( 1.41126510928624,0,0,1.42552031241033,0,0);
+	-webkit-transform: matrix( 1.41126510928624,0,0,1.42552031241033,0,0);
+	-ms-transform: matrix( 1.41126510928624,0,0,1.42552031241033,0,0);
+}
+
+/* -------------- Folder List Modal -------------- */
+
+#folder_ul li {
+	position:relative; 
+	padding: 10px 0 10px 0; 
+	margin-bottom: 15px;
+	border-bottom:1px solid #000;
+	border-radius: 50px;
+	border-style:none;
+	background-color: #D0D0D0;
+	box-shadow: 3px 1.928px 18px 0px rgb( 21, 11, 8 );
+	cursor:pointer;
+	text-align: center;
+}
+
+#folder_ul li:hover,
+#folder_ul li:active {
+	background-color: #EAEAEA;
+}
+
+#folder_ul li span {
+	position: relative;
+	display: inline-block;
+	margin-left: 35px;
+	margin-bottom: 5px;
+	padding: 5px;
+	font-size: 20px;
+	font-family: 'Nanum Gothic', serif;
+	color: rgb( 0, 0, 0 );
+	line-height: 0.5;
+}
+
+#folder_modal .modal-content .folder_button {
+	display:inline-block;
+	width: 48%;
+	padding: 5px;
+	margin-right: 5px;
+	border-radius:50px;
+	background-color: rgb( 255, 111, 65 );
+	opacity: 0.759;
+	box-shadow: 4px 6.928px 18px 1px rgb( 21, 11, 8 );
+	vertical-align:middle;
+	cursor:pointer;
+	letter-spacing:1px;
+}
+
+#folder_modal .modal-content .folder_button_text {
+	padding: 5px;
+	color: #FFF; 
+	text-align:center;
+	font-size:17px;	
 	font-family: 'Nanum Gothic', serif;
 	-moz-transform: matrix( 1.41126510928624,0,0,1.42552031241033,0,0);
 	-webkit-transform: matrix( 1.41126510928624,0,0,1.42552031241033,0,0);

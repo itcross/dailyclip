@@ -58,7 +58,7 @@
 						<a href="list.html"><img src="images/btn_home.png" alt=""></a>
 					</li>
 					<li class="bookmark">
-						<a href="#"><img src="images/btn_bookmark.png" alt=""></a>
+						<a href="#"><img src="images/btn_bookmark_over.png" alt=""></a>
 					</li>
 					<li class="folder">
 						<a href="folder.html"><img src="images/btn_folder.png" alt=""></a>
@@ -77,7 +77,7 @@
 <div id="modal" class="modal">
     <div class="modal-content">
 		<ul>
-			<li><a href="javascript:;" id="folder_link" class="menu_text">폴더 추가/변경하기</a></li>
+			<li><a href="javascript:;" id="folder_link" class="menu_text">폴더에 추가/변경하기</a></li>
 			<li><a href="javascript:;" id="edit_link" class="menu_text">링크 수정하기</a></li>
 			<li><a href="javascript:;" id="remove_link" class="menu_text">링크 삭제하기</a></li>
 			<li><a href="#" onclick="fnCloseModal();" class="menu_text">닫기</a></li>
@@ -88,12 +88,8 @@
 <div id="edit_modal" class="modal">
     <div class="modal-content">
 		<ul id="edit_ul">
-			<li class="edit_text">링크 제목
-				<input type='text' id='title_edit' class="edit_item"/>
-			</li>
-			<li class="edit_text">링크 내용
-				<input type='text' id='content_edit' class="edit_item"/>
-			</li>
+			<li><input type='text' id='title_edit' placeholder="링크 제목" size="50"/></li>
+			<li><input type='text' id='content_edit' placeholder="링크 내용" size="50"/></li>
 			<li class="edit_button">
 				<a href="#" onclick="fnLinkEdit();" class="edit_button_text">확인</a>
 			</li>
@@ -101,6 +97,21 @@
 				<a href="#" onclick="fnCloseEditModal();" class="edit_button_text">취소</a>
 			</li>
 		</ul>
+    </div>
+</div>
+<!-- folder list modal -->
+<div id="folder_modal" class="modal">
+    <div class="modal-content">
+		<ul id="folder_ul">
+		<li><span>폴더1</span></li>
+		<li><span>폴더2</span></li>
+		</ul>
+		<span class="folder_button">
+			<a href="#" onclick="fnLinkFolder();" class="folder_button_text">확인</a>
+		</span>
+		<span class="folder_button">		
+			<a href="#" onclick="fnCloseFolderModal();" class="folder_button_text">취소</a>
+		</span>
     </div>
 </div>
 </body>

@@ -10,151 +10,209 @@
 	<meta property="og:url" content="">
 	<link rel="stylesheet" href="css/common.css" type="text/css" />
 	<link rel="stylesheet" href="css/style.css" type="text/css" />
-<style>
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
+	<style>
+	/* The Modal (background) */
+	.modal {
+		display: none; /* Hidden by default */
+		position: fixed; /* Stay in place */
+		z-index: 1; /* Sit on top */
+		padding-top: 100px; /* Location of the box */
+		left: 0;
+		top: 0;
+		width: 100%; /* Full width */
+		height: 100%; /* Full height */
+		overflow: auto; /* Enable scroll if needed */
+		background-color: rgb(0,0,0); /* Fallback color */
+		background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
 
-/* Modal Content */
-.modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-}
+	/* Modal Content */
+	.modal-content {
+		background-color: #fefefe;
+		margin: auto;
+		padding: 20px;
+		border: 1px solid #888;
+		width: 80%;
+	}
 
-/* The Close Button */
-.close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
+	/* The Close Button */
+	.close {
+		color: #aaaaaa;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+	}
 
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
+	.close:hover,
+	.close:focus {
+		color: #000;
+		text-decoration: none;
+		cursor: pointer;
+	}
 
-/* loading css */
-.container{
-	text-align: center;
-	background-color: rgb(234,234,234);
-	overflow: hidden;
-}
-
-
-.box{
-	display: inline-block;
-	height: 200px;
-	width: 100%;
-	float:left;
-	position: relative;
-	/*margin:0 -4px -5px -2px;*/
-	transition: all .2s ease;
-}
-
-/* -------------- loader10 -------------- */
-
-.loader10:before{
-	content: "";
-	position: absolute;
-	top: 0px;
-	left: -25px;
-	height: 12px;
-	width: 12px;
-	border-radius: 12px;
-	-webkit-animation: loader10g 3s ease-in-out infinite;
-			animation: loader10g 3s ease-in-out infinite;
-}
-
-.loader10{
-	position: relative;
-	width: 12px;
-	height: 12px;
-	top: 46%;
-	left: 50%;
-	border-radius: 12px;
-	-webkit-animation: loader10m 3s ease-in-out infinite;
-			animation: loader10m 3s ease-in-out infinite;
-}
+	/* loading css */
+	.container{
+		text-align: center;
+		background-color: rgb(234,234,234);
+		overflow: hidden;
+	}
 
 
-.loader10:after{
-	content: "";
-	position: absolute;
-	top: 0px;
-	left: 25px;
-	height: 10px;
-	width: 10px;
-	border-radius: 10px;
-	-webkit-animation: loader10d 3s ease-in-out infinite;
-			animation: loader10d 3s ease-in-out infinite;
-}
+	.box{
+		display: inline-block;
+		height: 200px;
+		width: 100%;
+		float:left;
+		position: relative;
+		/*margin:0 -4px -5px -2px;*/
+		transition: all .2s ease;
+	}
 
-@-webkit-keyframes loader10g{
-	0%{background-color: rgba(180, 150, 255, .2);}
-	25%{background-color: rgba(180, 255, 255, 1);}
-	50%{background-color: rgba(255, 255, 255, .2);}
-	75%{background-color: rgba(255, 255, 255, .2);}
-	100%{background-color: rgba(255, 255, 255, .2);}
-}
-@keyframes loader10g{
-	0%{background-color: rgba(255, 255, 255, .2);}
-	25%{background-color: rgba(255, 255, 255, 1);}
-	50%{background-color: rgba(255, 255, 255, .2);}
-	75%{background-color: rgba(255, 255, 255, .2);}
-	100%{background-color: rgba(255, 255, 255, .2);}
-}
+	/* -------------- loader10 -------------- */
 
-@-webkit-keyframes loader10m{
-	0%{background-color: rgba(255, 255, 255, .2);}
-	25%{background-color: rgba(255, 255, 255, .2);}
-	50%{background-color: rgba(255, 255, 255, 1);}
-	75%{background-color: rgba(255, 255, 255, .2);}
-	100%{background-color: rgba(255, 255, 255, .2);}
-}
-@keyframes loader10m{
-	0%{background-color: rgba(255, 255, 255, .2);}
-	25%{background-color: rgba(255, 255, 255, .2);}
-	50%{background-color: rgba(255, 255, 255, 1);}
-	75%{background-color: rgba(255, 255, 255, .2);}
-	100%{background-color: rgba(255, 255, 255, .2);}
-}
+	.loader10:before{
+		content: "";
+		position: absolute;
+		top: 0px;
+		left: -25px;
+		height: 12px;
+		width: 12px;
+		border-radius: 12px;
+		-webkit-animation: loader10g 3s ease-in-out infinite;
+				animation: loader10g 3s ease-in-out infinite;
+	}
 
-@-webkit-keyframes loader10d{
-	0%{background-color: rgba(255, 255, 255, .2);}
-	25%{background-color: rgba(255, 255, 255, .2);}
-	50%{background-color: rgba(255, 255, 255, .2);}
-	75%{background-color: rgba(255, 255, 255, 1);}
-	100%{background-color: rgba(255, 255, 255, .2);}
-}
-@keyframes loader10d{
-	0%{background-color: rgba(255, 255, 255, .2);}
-	25%{background-color: rgba(255, 255, 255, .2);}
-	50%{background-color: rgba(255, 255, 255, .2);}
-	75%{background-color: rgba(255, 255, 255, 1);}
-	100%{background-color: rgba(255, 255, 255, .2);}
-}
-</style>
+	.loader10{
+		position: relative;
+		width: 12px;
+		height: 12px;
+		top: 46%;
+		left: 50%;
+		border-radius: 12px;
+		-webkit-animation: loader10m 3s ease-in-out infinite;
+				animation: loader10m 3s ease-in-out infinite;
+	}
+
+
+	.loader10:after{
+		content: "";
+		position: absolute;
+		top: 0px;
+		left: 25px;
+		height: 10px;
+		width: 10px;
+		border-radius: 10px;
+		-webkit-animation: loader10d 3s ease-in-out infinite;
+				animation: loader10d 3s ease-in-out infinite;
+	}
+
+	@-webkit-keyframes loader10g{
+		0%{background-color: rgba(180, 150, 255, .2);}
+		25%{background-color: rgba(180, 255, 255, 1);}
+		50%{background-color: rgba(255, 255, 255, .2);}
+		75%{background-color: rgba(255, 255, 255, .2);}
+		100%{background-color: rgba(255, 255, 255, .2);}
+	}
+	@keyframes loader10g{
+		0%{background-color: rgba(255, 255, 255, .2);}
+		25%{background-color: rgba(255, 255, 255, 1);}
+		50%{background-color: rgba(255, 255, 255, .2);}
+		75%{background-color: rgba(255, 255, 255, .2);}
+		100%{background-color: rgba(255, 255, 255, .2);}
+	}
+
+	@-webkit-keyframes loader10m{
+		0%{background-color: rgba(255, 255, 255, .2);}
+		25%{background-color: rgba(255, 255, 255, .2);}
+		50%{background-color: rgba(255, 255, 255, 1);}
+		75%{background-color: rgba(255, 255, 255, .2);}
+		100%{background-color: rgba(255, 255, 255, .2);}
+	}
+	@keyframes loader10m{
+		0%{background-color: rgba(255, 255, 255, .2);}
+		25%{background-color: rgba(255, 255, 255, .2);}
+		50%{background-color: rgba(255, 255, 255, 1);}
+		75%{background-color: rgba(255, 255, 255, .2);}
+		100%{background-color: rgba(255, 255, 255, .2);}
+	}
+
+	@-webkit-keyframes loader10d{
+		0%{background-color: rgba(255, 255, 255, .2);}
+		25%{background-color: rgba(255, 255, 255, .2);}
+		50%{background-color: rgba(255, 255, 255, .2);}
+		75%{background-color: rgba(255, 255, 255, 1);}
+		100%{background-color: rgba(255, 255, 255, .2);}
+	}
+	@keyframes loader10d{
+		0%{background-color: rgba(255, 255, 255, .2);}
+		25%{background-color: rgba(255, 255, 255, .2);}
+		50%{background-color: rgba(255, 255, 255, .2);}
+		75%{background-color: rgba(255, 255, 255, 1);}
+		100%{background-color: rgba(255, 255, 255, .2);}
+	}
+	</style>
 	<script src="https://www.gstatic.com/firebasejs/4.5.1/firebase.js"></script>
 	<script src="https://code.jquery.com/jquery-latest.min.js" ></script>
 	<script src="js/config.js"></script>
-	<script src="js/folder.js"></script>
+	<script>
+	var r = firebase.database().ref('folder/');
+	var userId;
+	var email;
+
+	firebase.auth().onAuthStateChanged(function(user) {
+		 if(user){
+			 email = user.email;
+			 userId = user.uid;
+			 //DB 구조 변경
+
+			 updateList();
+
+		 }
+	});
+
+	var goToList = function(name){
+		r.child(userId).on('value',function(sn){
+			sn.forEach(function(snf){
+				if(snf.val().name == name){
+					var trans = snf.key;
+					try{
+						//App.intoFolderUserLink(userId, trans);
+				
+					}catch(err){
+
+					}finally{
+						
+						//location.href = "list.html?key=" + trans;
+					}
+					
+				}
+			});
+		});
+	};
+
+	var updateList = function(){
+		$(".add_folder").empty();
+		$("#del").empty();
+		if(!userId){
+			return;
+		}
+		r.child(userId).on('value',function(sn){
+			var s = 0;
+			sn.forEach(function(snf){
+				  $(".add_folder").append(
+						"<li class='add_list' onclick='goToList("+'"'+ snf.val().name +'"'+");'>"
+							+"<span class='add_title'>"+snf.val().name+"</span>"
+							+"<span class='add_hit'>0</span>"
+						+"</li>");
+					$("#del").append("<span id='del"+s+"'>"+snf.val().name+"</span><br>");
+					s++;
+			});
+			$(".container").css('display','none');
+			$(".add_folder").slideDown();
+			$(".btn_add").css('display','block');
+		});
+	}
+	</script>
 	<title>DAILY CLIP</title>
 </head>
 <body>
@@ -307,8 +365,6 @@
             $("#modal").css('display','none');
         });
     })
-
 </script>
-
 </body>
 </html>
