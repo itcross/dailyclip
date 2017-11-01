@@ -10,3 +10,14 @@ var config = {
 };
 
 firebase.initializeApp(config);
+
+// GET URL PARAMETER
+/* url이 다음과 같을 때, example.com?param1=name&param2=&id=6
+	$.urlParam('param1'); // name
+	$.urlParam('id');        // 6
+	$.urlParam('param2');   // null
+*/
+$.urlParam = function(name){
+	var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	return results[1] || 0;
+}
