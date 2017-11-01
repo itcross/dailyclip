@@ -6,12 +6,12 @@ var articleNum; //클립 갯수
 var articleKey;	//클립 고유키
 var folderkey;
 var u; //선택 url
+var param;
 
 firebase.auth().onAuthStateChanged(function(user) {
  if(user){
 	userEmail = user.email;
 	userId = user.uid;
-	
 	fnHideModal();	//메뉴 모달 숨기기
 	fnLinkLoad(user.uid); //사용자 고유의 아이디를 사용한다.
 	//fnLinkAdd();	//링크 추가
@@ -30,6 +30,11 @@ firebase.auth().onAuthStateChanged(function(user) {
 //해당 유저의 모든 클립 출력
 function fnLinkLoad(userID){
 	articleNum = 0;
+  try{
+    param = decodeURI($.urlParam('fn'));
+  }catch(err){
+    param = null;
+  }
 	$(".link_list").empty();	//link_list 내의 내용 삭제
 	/*if(folderkey == "ps://dailyclip-b64d3.firebaseapp.com/list.html"){
 		databaseRef.child(userID).on('value', snapshot => {
@@ -49,7 +54,7 @@ function fnLinkLoad(userID){
 					articleText += "<a href='#'> <h2 class='title_article'";
 					articleText += "id='title_article" + articleNum + "' " + fnClickText + ">";
 					articleText	+= childSnapshot.val().title + "<h2></a>";
-					
+
 					articleText += "<a href='#'><p class='content_article'";
 					articleText += "id='content_article" + articleNum + "'" + fnClickText + ">";
 					articleText += childSnapshot.val().description + "</p></a>";
@@ -62,7 +67,7 @@ function fnLinkLoad(userID){
 
 					articleText += "<span class='btn_menu'><a href='#' " + fnMenuText + ">";
 					articleText += "<img src='images/btn_menu.png' alt=''></a></span>";
-						
+
 					if(childSnapshot.val().bookMark == 'N'){
 						articleText += "<span class='chk_list'><a href='#'>";
 						articleText += "<img id='imgChk" + articleNum + "' src='images/chk_list.png' alt=''";
@@ -82,46 +87,86 @@ function fnLinkLoad(userID){
 		});
 	}else{*/
 		//databaseRef.child(userID).child(folderkey).on('value', snapshot => {
+
 		databaseRef.child(userID).on('value', snapshot => {
 		snapshot.forEach(function(childSnapshot){
 
 			++articleNum;	//링크 갯수 추가
+      if(param){
+        if(param == childSnapshot.val().fname){
+    			var articleText = "";
+    			var fnClickText = "onclick='fnLinkClick(" + '"' + childSnapshot.val().url + '"' + ");'";
+    			var fnMenuText = "onclick='fnMenuClick(" + '"' + childSnapshot.key + '"' + ");'";
 
-			var articleText = "";
-			var fnClickText = "onclick='fnLinkClick(" + '"' + childSnapshot.val().url + '"' + ");'";
-			var fnMenuText = "onclick='fnMenuClick(" + '"' + childSnapshot.key + '"' + ");'";
+    			articleText += "<div class='article'>";
+    			articleText += "<a href='#'><div class='img_thumb'" + fnClickText + "></div></a>";
 
-			articleText += "<div class='article'>";
-			articleText += "<a href='#'><div class='img_thumb'" + fnClickText + "></div></a>";
+    			articleText += "<div class='content'>";
+    			articleText += "<a href='#'> <h2 class='title_article'";
+    			articleText += "id='title_article" + articleNum + "' " + fnClickText + ">";
+    			articleText	+= childSnapshot.val().title + "<h2></a>";
 
-			articleText += "<div class='content'>";
-			articleText += "<a href='#'> <h2 class='title_article'";
-			articleText += "id='title_article" + articleNum + "' " + fnClickText + ">";
-			articleText	+= childSnapshot.val().title + "<h2></a>";
-			
-			articleText += "<a href='#'><p class='content_article'";
-			articleText += "id='content_article" + articleNum + "'" + fnClickText + ">";
-			articleText += childSnapshot.val().description + "</p></a>";
+    			articleText += "<a href='#'><p class='content_article'";
+    			articleText += "id='content_article" + articleNum + "'" + fnClickText + ">";
+    			articleText += childSnapshot.val().description + "</p></a>";
 
-			articleText += "<div class='source_area'>";
-			articleText += "<span class='date_article' id='date_article" + articleNum + "'>";
-			articleText += childSnapshot.val().savedDate + "</span>";
-			articleText += "<span class='addr_article' id='addr_article" + articleNum + "'>";
-			articleText += childSnapshot.val().url + "</span></div>";
+    			articleText += "<div class='source_area'>";
+    			articleText += "<span class='date_article' id='date_article" + articleNum + "'>";
+    			articleText += childSnapshot.val().savedDate + "</span>";
+    			articleText += "<span class='addr_article' id='addr_article" + articleNum + "'>";
+    			articleText += childSnapshot.val().url + "</span></div>";
 
-			articleText += "<span class='btn_menu'><a href='#' " + fnMenuText + ">";
-			articleText += "<img src='images/btn_menu.png' alt=''></a></span>";
-				
-			if(childSnapshot.val().bookMark == 'N'){
-				articleText += "<span class='chk_list'><a href='#'>";
-				articleText += "<img id='imgChk" + articleNum + "' src='images/chk_list.png' alt=''";
-			}
-			else{
-				articleText += "<span class='chk_list'><a href='#'>";
-				articleText += "<img id='imgChk" + articleNum + "' class='bookmark' src='images/chk_list_select.png' alt=''";
-			}
-			articleText += "onclick='fnLinkCheck(" + '"' + childSnapshot.key + '"' + ',"' + articleNum + '"' + ',"' + folderkey + '"' + ");'>";
-			articleText += "</a></span></div></div>";
+    			articleText += "<span class='btn_menu'><a href='#' " + fnMenuText + ">";
+    			articleText += "<img src='images/btn_menu.png' alt=''></a></span>";
+
+    			if(childSnapshot.val().bookMark == 'N'){
+    				articleText += "<span class='chk_list'><a href='#'>";
+    				articleText += "<img id='imgChk" + articleNum + "' src='images/chk_list.png' alt=''";
+    			}
+    			else{
+    				articleText += "<span class='chk_list'><a href='#'>";
+    				articleText += "<img id='imgChk" + articleNum + "' class='bookmark' src='images/chk_list_select.png' alt=''";
+    			}
+    			articleText += "onclick='fnLinkCheck(" + '"' + childSnapshot.key + '"' + ',"' + articleNum + '"' + ',"' + folderkey + '"' + ");'>";
+    			articleText += "</a></span></div></div>";
+        }
+      }else{
+        var articleText = "";
+        var fnClickText = "onclick='fnLinkClick(" + '"' + childSnapshot.val().url + '"' + ");'";
+        var fnMenuText = "onclick='fnMenuClick(" + '"' + childSnapshot.key + '"' + ");'";
+
+        articleText += "<div class='article'>";
+        articleText += "<a href='#'><div class='img_thumb'" + fnClickText + "></div></a>";
+
+        articleText += "<div class='content'>";
+        articleText += "<a href='#'> <h2 class='title_article'";
+        articleText += "id='title_article" + articleNum + "' " + fnClickText + ">";
+        articleText	+= childSnapshot.val().title + "<h2></a>";
+
+        articleText += "<a href='#'><p class='content_article'";
+        articleText += "id='content_article" + articleNum + "'" + fnClickText + ">";
+        articleText += childSnapshot.val().description + "</p></a>";
+
+        articleText += "<div class='source_area'>";
+        articleText += "<span class='date_article' id='date_article" + articleNum + "'>";
+        articleText += childSnapshot.val().savedDate + "</span>";
+        articleText += "<span class='addr_article' id='addr_article" + articleNum + "'>";
+        articleText += childSnapshot.val().url + "</span></div>";
+
+        articleText += "<span class='btn_menu'><a href='#' " + fnMenuText + ">";
+        articleText += "<img src='images/btn_menu.png' alt=''></a></span>";
+
+        if(childSnapshot.val().bookMark == 'N'){
+          articleText += "<span class='chk_list'><a href='#'>";
+          articleText += "<img id='imgChk" + articleNum + "' src='images/chk_list.png' alt=''";
+        }
+        else{
+          articleText += "<span class='chk_list'><a href='#'>";
+          articleText += "<img id='imgChk" + articleNum + "' class='bookmark' src='images/chk_list_select.png' alt=''";
+        }
+        articleText += "onclick='fnLinkCheck(" + '"' + childSnapshot.key + '"' + ',"' + articleNum + '"' + ',"' + folderkey + '"' + ");'>";
+        articleText += "</a></span></div></div>";
+      }
 
 			$(".link_list").append(articleText);	//링크목록에 추가
 		})
@@ -142,7 +187,7 @@ function fnLinkClick(url){
 	//링크 클릭시 해당 링크로 이동
 		location.href = url;
 	}*/
-	
+
 	location.href = url;
 	//location.href = "view.html?link=" + linkKey;
 }
@@ -264,19 +309,19 @@ function fnCloseFolderModal(){
 
 //링크 삭제 & 수정 & 폴더변경 처리
 function fnMenuClick(key){
-	
+
 	//추가된사항(폴더 search)
 	folderList(userId);
 	u = choiceUrl(key);
-	
+
 	articleKey = key;
-	
+
 	//모달 보이기
 	$("#modal").css('display','block');
-	
+
 	//링크 삭제
 	$("#remove_link").on('click', function(){
-	
+
 		var isDelOk = confirm("해당 링크를 삭제하시겠어요?");
 
 		if(isDelOk == false){
@@ -297,26 +342,26 @@ function fnMenuClick(key){
 			fnLinkLoad(userId);
 		}
 	});
-	
+
 	//링크 수정 모달 열기
 	$("#edit_link").on('click', function() {
-	
+
 		//메뉴 모달 닫기
 		$("#modal").css('display','none');
-		
+
 		databaseRef.child(userId).child(key).on('value', function(snapshot){
-			
+
 			$("#title_edit").val(snapshot.val().title);
 			$("#content_edit").val(snapshot.val().description);
 		});
-		
+
 		//수정 모달 열기
 		$("#edit_modal").css('display','block');
 	});
-	
+
 	//폴더에 링크 추가/변경
 	$("#folder_link").on('click', function(){
-	
+
 		//메뉴 모달 닫기
 		$("#modal").css('display','none');
 		//폴더변경 모달 열기
@@ -326,10 +371,10 @@ function fnMenuClick(key){
 
 //링크 수정
 function fnLinkEdit(){
-	
+
 	var editTitle = $("#title_edit").val();
 	var editContent = $("#content_edit").val();
-	
+
 	var data = {};
 	databaseRef.child(userId).child(articleKey).on('value', snapshot => {
 
@@ -346,7 +391,7 @@ function fnLinkEdit(){
 	var updates = {};
 	updates['/list/' + userId + '/' + articleKey] = data;
 	firebase.database().ref().update(updates);
-	
+
 	//수정 모달 닫기
 	$("#edit_modal").css('display','none');
 	//메뉴 모달 닫기
@@ -359,13 +404,13 @@ function fnLinkEdit(){
 
 //링크 폴더추가/변경
 function fnLinkFolder(){
-	
+
 	/*
-	
+
 	코드 넣기
-	
+
 	*/
-	
+
 	//폴더변경 모달 닫기
 	$("#folder_modal").css('display','none');
 	//메뉴 모달 닫기
@@ -381,7 +426,7 @@ function fnLinkFolder(){
 function fnShowSearch(){
 
 	var $show = $(".searchTxt").css('display');
-	
+
 	if($show == 'none'){
 		$(".top_menu > h1").hide();
 		$(".searchTxt").val('').fadeIn();
@@ -395,7 +440,7 @@ function fnShowSearch(){
 
 //링크 검색 커서
 function fnKeyUpSearch(){
-	
+
 	var txt = $(".searchTxt").val();
 
 	if(txt == ""){
@@ -415,11 +460,11 @@ function fnLinkSearch(userID, txt){
 	articleNum = 0;
 	$(".link_list").empty();
 	$(".list_search").empty();
-	
+
 	databaseRef.child(userID).on('value',function(snapshot){
 		snapshot.forEach(function(childSnapshot){
 			if(childSnapshot.val().title.indexOf(txt) != -1){
-				
+
 				++articleNum;	//링크 갯수 추가
 
 				var fnClickText = "onclick='fnLinkClick(" + '"' + childSnapshot.val().url + '"' + ");'";
@@ -445,7 +490,7 @@ function fnLinkSearch(userID, txt){
 
 				searchText += "<span class='btn_menu'><a href='#' " + fnMenuText + ">";
 				searchText += "<img src='images/btn_menu.png' alt=''></a></span>";
-				
+
 				if(childSnapshot.val().bookMark == 'N'){
 					searchText += "<span class='chk_list'><a href='#'>";
 					searchText += "<img id='imgChk" + articleNum + "' src='images/chk_list.png' alt=''";
@@ -454,7 +499,7 @@ function fnLinkSearch(userID, txt){
 					searchText += "<span class='chk_list'><a href='#'>";
 					searchText += "<img id='imgChk" + articleNum + "' class='bookmark' src='images/chk_list_select.png' alt=''";
 				}
-		
+
 				searchText += "onclick='fnLinkCheck(" + '"' + childSnapshot.key + '"' + ',"' + articleNum + '"' + ',"' + "abc" + '"' + ");'>";
 				searchText += "</a></span></div></div>";
 			}
@@ -466,7 +511,7 @@ function fnLinkSearch(userID, txt){
 		$(".search_container").css('display', 'block');
 	});
 }
-	
+
 	//선택 url
 	function choiceUrl(key){
 		var url;
@@ -482,9 +527,9 @@ function fnLinkSearch(userID, txt){
 		 if(!userID){
             return;
         }
-		
-		var f = firebase.database().ref('folder/');	
-		
+
+		var f = firebase.database().ref('folder/');
+
 		f.child(userID).on('value',function(sn){
 			var s = 0;
 			sn.forEach(function(snf){
@@ -493,14 +538,14 @@ function fnLinkSearch(userID, txt){
 			});
 		});
 	}
-	
+
 	//링크 폴더 저장
 	function linkSave(url,choicefolder){
-		
+
 		databaseRef.child(userId).orderByChild('url').equalTo(url).on('child_added',function(snl){
 			key = snl.key;
 		});
-		
+
 		databaseRef.child(userId+'/'+key).update({
 			fname : choicefolder
 		},function(error){
@@ -513,5 +558,5 @@ function fnLinkSearch(userID, txt){
 		fnLinkLoad(userId);
 		$("#modal").css('display','none');
 		$("#saveModal").css('display','none');
-	
+
 	}
