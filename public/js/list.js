@@ -5,6 +5,7 @@ var userId;	//사용자 고유 아이디
 var articleNum; //클립 갯수
 var articleKey;	//클립 고유키
 var folderkey;
+var u; //선택 url
 
 firebase.auth().onAuthStateChanged(function(user) {
  if(user){
@@ -264,6 +265,10 @@ function fnCloseFolderModal(){
 //링크 삭제 & 수정 & 폴더변경 처리
 function fnMenuClick(key){
 	
+	//추가된사항(폴더 search)
+	folderList(userId);
+	u = choiceUrl(key);
+	
 	articleKey = key;
 	
 	//모달 보이기
@@ -461,3 +466,52 @@ function fnLinkSearch(userID, txt){
 		$(".search_container").css('display', 'block');
 	});
 }
+	
+	//선택 url
+	function choiceUrl(key){
+		var url;
+		databaseRef.child(userId+'/'+key).on('value',function(sn){
+			url = sn.val().url;
+		});
+		return url;
+	}
+
+	//폴더 리스트
+	function folderList(userID){
+		$("#fol").empty();
+		 if(!userID){
+            return;
+        }
+		
+		var f = firebase.database().ref('folder/');	
+		
+		f.child(userID).on('value',function(sn){
+			var s = 0;
+			sn.forEach(function(snf){
+				$("#fol").append("<span id='folder"+s+"'>"+snf.val().name+"</span><br>");
+				s++;
+			});
+		});
+	}
+	
+	//링크 폴더 저장
+	function linkSave(url,choicefolder){
+		
+		databaseRef.child(userId).orderByChild('url').equalTo(url).on('child_added',function(snl){
+			key = snl.key;
+		});
+		
+		databaseRef.child(userId+'/'+key).update({
+			fname : choicefolder
+		},function(error){
+			if(error){
+				alert('data error!');
+			}else{
+				alert('링크를 폴더에 저장하였습니다.');
+			}
+		});
+		fnLinkLoad(userId);
+		$("#modal").css('display','none');
+		$("#saveModal").css('display','none');
+	
+	}
