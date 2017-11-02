@@ -251,6 +251,10 @@
 	box-shadow: 3px 1.928px 18px 0px rgb( 21, 11, 8 );
 	cursor:pointer;
 	text-align: center;
+	
+	font-size: 20px;
+	font-family: 'Nanum Gothic', serif;
+	line-height: 0.5;
 }
 
 #folder_ul li:hover,
@@ -272,9 +276,10 @@
 
 #folder_modal .modal-content .folder_button {
 	display:inline-block;
-	width: 48%;
-	padding: 5px;
-	margin-right: 5px;
+	width: 100%;
+	/*padding: 5px;*/
+	padding: 10px 0 10px 0; 
+	/*margin-right: 5px;*/
 	border-radius:50px;
 	background-color: rgb( 255, 111, 65 );
 	opacity: 0.759;

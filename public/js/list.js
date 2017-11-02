@@ -5,8 +5,8 @@ var userId;	//사용자 고유 아이디
 var articleNum; //클립 갯수
 var articleKey;	//클립 고유키
 var folderkey;
-var u; //선택 url
-var param;
+//var u; //선택 url
+var folderParam; //폴더명
 
 firebase.auth().onAuthStateChanged(function(user) {
  if(user){
@@ -29,12 +29,15 @@ firebase.auth().onAuthStateChanged(function(user) {
 /******************************* LINK LOAD *******************************/
 //해당 유저의 모든 클립 출력
 function fnLinkLoad(userID){
+	
 	articleNum = 0;
-  try{
-    param = decodeURI($.urlParam('fn'));
-  }catch(err){
-    param = null;
-  }
+  
+	try{
+		folderParam = decodeURI($.urlParam('fn'));
+	}catch(err){
+		folderParam = null;
+	}
+	
 	$(".link_list").empty();	//link_list 내의 내용 삭제
 	/*if(folderkey == "ps://dailyclip-b64d3.firebaseapp.com/list.html"){
 		databaseRef.child(userID).on('value', snapshot => {
@@ -92,81 +95,83 @@ function fnLinkLoad(userID){
 		snapshot.forEach(function(childSnapshot){
 
 			++articleNum;	//링크 갯수 추가
-      if(param){
-        if(param == childSnapshot.val().fname){
-    			var articleText = "";
-    			var fnClickText = "onclick='fnLinkClick(" + '"' + childSnapshot.val().url + '"' + ");'";
-    			var fnMenuText = "onclick='fnMenuClick(" + '"' + childSnapshot.key + '"' + ");'";
+			
+			if(folderParam){
+				if(folderParam == childSnapshot.val().fname){
+					var articleText = "";
+					var fnClickText = "onclick='fnLinkClick(" + '"' + childSnapshot.val().url + '"' + ");'";
+					var fnMenuText = "onclick='fnMenuClick(" + '"' + childSnapshot.key + '"' + ");'";
 
-    			articleText += "<div class='article'>";
-    			articleText += "<a href='#'><div class='img_thumb'" + fnClickText + "></div></a>";
+					articleText += "<div class='article'>";
+					articleText += "<a href='#'><div class='img_thumb'" + fnClickText + "></div></a>";
 
-    			articleText += "<div class='content'>";
-    			articleText += "<a href='#'> <h2 class='title_article'";
-    			articleText += "id='title_article" + articleNum + "' " + fnClickText + ">";
-    			articleText	+= childSnapshot.val().title + "<h2></a>";
+					articleText += "<div class='content'>";
+					articleText += "<a href='#'> <h2 class='title_article'";
+					articleText += "id='title_article" + articleNum + "' " + fnClickText + ">";
+					articleText	+= childSnapshot.val().title + "<h2></a>";
 
-    			articleText += "<a href='#'><p class='content_article'";
-    			articleText += "id='content_article" + articleNum + "'" + fnClickText + ">";
-    			articleText += childSnapshot.val().description + "</p></a>";
+					articleText += "<a href='#'><p class='content_article'";
+					articleText += "id='content_article" + articleNum + "'" + fnClickText + ">";
+					articleText += childSnapshot.val().description + "</p></a>";
 
-    			articleText += "<div class='source_area'>";
-    			articleText += "<span class='date_article' id='date_article" + articleNum + "'>";
-    			articleText += childSnapshot.val().savedDate + "</span>";
-    			articleText += "<span class='addr_article' id='addr_article" + articleNum + "'>";
-    			articleText += childSnapshot.val().url + "</span></div>";
+					articleText += "<div class='source_area'>";
+					articleText += "<span class='date_article' id='date_article" + articleNum + "'>";
+					articleText += childSnapshot.val().savedDate + "</span>";
+					articleText += "<span class='addr_article' id='addr_article" + articleNum + "'>";
+					articleText += childSnapshot.val().url + "</span></div>";
 
-    			articleText += "<span class='btn_menu'><a href='#' " + fnMenuText + ">";
-    			articleText += "<img src='images/btn_menu.png' alt=''></a></span>";
+					articleText += "<span class='btn_menu'><a href='#' " + fnMenuText + ">";
+					articleText += "<img src='images/btn_menu.png' alt=''></a></span>";
 
-    			if(childSnapshot.val().bookMark == 'N'){
-    				articleText += "<span class='chk_list'><a href='#'>";
-    				articleText += "<img id='imgChk" + articleNum + "' src='images/chk_list.png' alt=''";
-    			}
-    			else{
-    				articleText += "<span class='chk_list'><a href='#'>";
-    				articleText += "<img id='imgChk" + articleNum + "' class='bookmark' src='images/chk_list_select.png' alt=''";
-    			}
-    			articleText += "onclick='fnLinkCheck(" + '"' + childSnapshot.key + '"' + ',"' + articleNum + '"' + ',"' + folderkey + '"' + ");'>";
-    			articleText += "</a></span></div></div>";
-        }
-      }else{
-        var articleText = "";
-        var fnClickText = "onclick='fnLinkClick(" + '"' + childSnapshot.val().url + '"' + ");'";
-        var fnMenuText = "onclick='fnMenuClick(" + '"' + childSnapshot.key + '"' + ");'";
+					if(childSnapshot.val().bookMark == 'N'){
+						articleText += "<span class='chk_list'><a href='#'>";
+						articleText += "<img id='imgChk" + articleNum + "' src='images/chk_list.png' alt=''";
+					}
+					else{
+						articleText += "<span class='chk_list'><a href='#'>";
+						articleText += "<img id='imgChk" + articleNum + "' class='bookmark' src='images/chk_list_select.png' alt=''";
+					}
+					articleText += "onclick='fnLinkCheck(" + '"' + childSnapshot.key + '"' + ',"' + articleNum + '"' + ',"' + folderkey + '"' + ");'>";
+					articleText += "</a></span></div></div>";
+				}
+			}
+			else{
+				var articleText = "";
+				var fnClickText = "onclick='fnLinkClick(" + '"' + childSnapshot.val().url + '"' + ");'";
+				var fnMenuText = "onclick='fnMenuClick(" + '"' + childSnapshot.key + '"' + ");'";
 
-        articleText += "<div class='article'>";
-        articleText += "<a href='#'><div class='img_thumb'" + fnClickText + "></div></a>";
+				articleText += "<div class='article'>";
+				articleText += "<a href='#'><div class='img_thumb'" + fnClickText + "></div></a>";
 
-        articleText += "<div class='content'>";
-        articleText += "<a href='#'> <h2 class='title_article'";
-        articleText += "id='title_article" + articleNum + "' " + fnClickText + ">";
-        articleText	+= childSnapshot.val().title + "<h2></a>";
+				articleText += "<div class='content'>";
+				articleText += "<a href='#'> <h2 class='title_article'";
+				articleText += "id='title_article" + articleNum + "' " + fnClickText + ">";
+				articleText	+= childSnapshot.val().title + "<h2></a>";
 
-        articleText += "<a href='#'><p class='content_article'";
-        articleText += "id='content_article" + articleNum + "'" + fnClickText + ">";
-        articleText += childSnapshot.val().description + "</p></a>";
+				articleText += "<a href='#'><p class='content_article'";
+				articleText += "id='content_article" + articleNum + "'" + fnClickText + ">";
+				articleText += childSnapshot.val().description + "</p></a>";
 
-        articleText += "<div class='source_area'>";
-        articleText += "<span class='date_article' id='date_article" + articleNum + "'>";
-        articleText += childSnapshot.val().savedDate + "</span>";
-        articleText += "<span class='addr_article' id='addr_article" + articleNum + "'>";
-        articleText += childSnapshot.val().url + "</span></div>";
+				articleText += "<div class='source_area'>";
+				articleText += "<span class='date_article' id='date_article" + articleNum + "'>";
+				articleText += childSnapshot.val().savedDate + "</span>";
+				articleText += "<span class='addr_article' id='addr_article" + articleNum + "'>";
+				articleText += childSnapshot.val().url + "</span></div>";
 
-        articleText += "<span class='btn_menu'><a href='#' " + fnMenuText + ">";
-        articleText += "<img src='images/btn_menu.png' alt=''></a></span>";
+				articleText += "<span class='btn_menu'><a href='#' " + fnMenuText + ">";
+				articleText += "<img src='images/btn_menu.png' alt=''></a></span>";
 
-        if(childSnapshot.val().bookMark == 'N'){
-          articleText += "<span class='chk_list'><a href='#'>";
-          articleText += "<img id='imgChk" + articleNum + "' src='images/chk_list.png' alt=''";
-        }
-        else{
-          articleText += "<span class='chk_list'><a href='#'>";
-          articleText += "<img id='imgChk" + articleNum + "' class='bookmark' src='images/chk_list_select.png' alt=''";
-        }
-        articleText += "onclick='fnLinkCheck(" + '"' + childSnapshot.key + '"' + ',"' + articleNum + '"' + ',"' + folderkey + '"' + ");'>";
-        articleText += "</a></span></div></div>";
-      }
+				if(childSnapshot.val().bookMark == 'N'){
+				  articleText += "<span class='chk_list'><a href='#'>";
+				  articleText += "<img id='imgChk" + articleNum + "' src='images/chk_list.png' alt=''";
+				}
+				else{
+				  articleText += "<span class='chk_list'><a href='#'>";
+				  articleText += "<img id='imgChk" + articleNum + "' class='bookmark' src='images/chk_list_select.png' alt=''";
+				}
+				articleText += "onclick='fnLinkCheck(" + '"' + childSnapshot.key + '"' + ',"' + articleNum + '"' + ',"' + folderkey + '"' + ");'>";
+				articleText += "</a></span></div></div>";
+			}
 
 			$(".link_list").append(articleText);	//링크목록에 추가
 		})
@@ -311,8 +316,8 @@ function fnCloseFolderModal(){
 function fnMenuClick(key){
 
 	//추가된사항(폴더 search)
-	folderList(userId);
-	u = choiceUrl(key);
+	//folderList(userId);
+	//u = choiceUrl(key);
 
 	articleKey = key;
 
@@ -366,6 +371,20 @@ function fnMenuClick(key){
 		$("#modal").css('display','none');
 		//폴더변경 모달 열기
 		$("#folder_modal").css('display','block');
+		//폴더 리스트 갱신
+		fnFolderList(userId);
+		
+		var keyUrl = fnChoiceUrl(key);
+		
+		$("#folder_ul > li").each(function(i){
+			//console.log(i);
+			$("#folder"+i).on('click',function(){
+				//console.log("dd");
+				var choicef = $(this).val();
+				//console.log(choicef);
+				//fnLinkFolder(keyUrl, choicef);
+			});
+		});
 	});
 }
 
@@ -403,14 +422,22 @@ function fnLinkEdit(){
 }
 
 //링크 폴더추가/변경
-function fnLinkFolder(){
+function fnLinkFolder(url, choicefolder){
 
-	/*
+	databaseRef.child(userId).orderByChild('url').equalTo(url).on('child_added',function(snl){
+		key = snl.key;
+	});
 
-	코드 넣기
-
-	*/
-
+	databaseRef.child(userId+'/'+key).update({
+		fname : choicefolder
+	},function(error){
+		if(error){
+			alert('data error!');
+		}else{
+			alert('링크를 폴더에 저장하였습니다.');
+		}
+	});
+	
 	//폴더변경 모달 닫기
 	$("#folder_modal").css('display','none');
 	//메뉴 모달 닫기
@@ -512,51 +539,33 @@ function fnLinkSearch(userID, txt){
 	});
 }
 
-	//선택 url
-	function choiceUrl(key){
-		var url;
-		databaseRef.child(userId+'/'+key).on('value',function(sn){
-			url = sn.val().url;
-		});
-		return url;
+/****************************** LINK FOLDER ******************************/
+//링크 선택
+function fnChoiceUrl(key){
+	
+	var url;
+	databaseRef.child(userId+'/'+key).on('value',function(snapshot){
+		url = snapshot.val().url;
+	});
+	return url;
+}
+
+//폴더 리스트
+function fnFolderList(userID){
+	
+	$("#folder_ul").empty();
+	
+	if(!userID){
+		return;
 	}
 
-	//폴더 리스트
-	function folderList(userID){
-		$("#fol").empty();
-		 if(!userID){
-            return;
-        }
-
-		var f = firebase.database().ref('folder/');
-
-		f.child(userID).on('value',function(sn){
-			var s = 0;
-			sn.forEach(function(snf){
-				$("#fol").append("<span id='folder"+s+"'>"+snf.val().name+"</span><br>");
-				s++;
-			});
+	var folderRef = firebase.database().ref('folder/');
+	
+	folderRef.child(userID).on('value', function(snapshot){
+		var num = 0;
+		snapshot.forEach(function(snf){
+			$("#folder_ul").append("<li id='folder" + num + "'>" + snf.val().name + "</li>");
+			num++;
 		});
-	}
-
-	//링크 폴더 저장
-	function linkSave(url,choicefolder){
-
-		databaseRef.child(userId).orderByChild('url').equalTo(url).on('child_added',function(snl){
-			key = snl.key;
-		});
-
-		databaseRef.child(userId+'/'+key).update({
-			fname : choicefolder
-		},function(error){
-			if(error){
-				alert('data error!');
-			}else{
-				alert('링크를 폴더에 저장하였습니다.');
-			}
-		});
-		fnLinkLoad(userId);
-		$("#modal").css('display','none');
-		$("#saveModal").css('display','none');
-
-	}
+	});
+}
