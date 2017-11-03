@@ -374,6 +374,19 @@
   left:10px;
 }
 
+#list .list_area .section .article .content .folder_area {
+  position:absolute;
+  bottom:20px;
+  left:10px;
+  font-size:7px;
+  font-family: 'Nanum Gothic', serif;
+  color: rgb( 112, 112, 112 );
+  line-height: 1.5;
+  -moz-transform: scale(0.99, 1);
+  -webkit-transform: scale(0.99, 1);
+  -ms-transform: scale(0.99, 1);
+}
+
 #list .list_area .section .article .content .chk_list {
   position:absolute;
   right:10px; 

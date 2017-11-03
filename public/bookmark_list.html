@@ -77,7 +77,7 @@
 <div id="modal" class="modal">
     <div class="modal-content">
 		<ul>
-			<li><a href="javascript:;" id="folder_link" class="menu_text">폴더에 추가/변경하기</a></li>
+			<li><a href="javascript:;" id="folder_link" class="menu_text">폴더에 저장/변경하기</a></li>
 			<li><a href="javascript:;" id="edit_link" class="menu_text">링크 수정하기</a></li>
 			<li><a href="javascript:;" id="remove_link" class="menu_text">링크 삭제하기</a></li>
 			<li><a href="#" onclick="fnCloseModal();" class="menu_text">닫기</a></li>
@@ -103,11 +103,9 @@
 <div id="folder_modal" class="modal">
     <div class="modal-content">
 		<ul id="folder_ul">
-		<li><span>폴더1</span></li>
-		<li><span>폴더2</span></li>
 		</ul>
-		<span class="folder_button">
-			<a href="#" onclick="fnLinkFolder();" class="folder_button_text">확인</a>
+		<span class="folder_button">		
+			<a href="#" onclick="fnFolderDelete();" class="folder_button_text">폴더에서 삭제</a>
 		</span>
 		<span class="folder_button">		
 			<a href="#" onclick="fnCloseFolderModal();" class="folder_button_text">취소</a>

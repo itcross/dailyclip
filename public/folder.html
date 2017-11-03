@@ -181,10 +181,10 @@
 					}catch(err){
 
 					}finally{
-
-						location.href = "list.html?fn=" + name;
+						if($("#hit_"+name).text() != 0){
+							location.href = "list.html?fn=" + name;
+						}
 					}
-
 				}
 			});
 		});
@@ -198,17 +198,35 @@
 		}
 		r.child(userId).on('value',function(sn){
 			var s = 0;
-			sn.forEach(function(snf){
-				  $(".add_folder").append(
+			sn.forEach(function(snf){				
+				$(".add_folder").append(
 						"<li class='add_list' onclick='goToList("+'"'+ snf.val().name +'"'+");'>"
 							+"<span class='add_title'>"+snf.val().name+"</span>"
+							+"<span class='add_hit' id='hit_"+snf.val().name+"'>0</span>"
 						+"</li>");
-					$("#del").append("<span id='del"+s+"'>"+snf.val().name+"</span><br>");
-					s++;
+				countList(snf.val().name);
+				$("#del").append("<span id='del"+s+"'>"+snf.val().name+"</span><br>");
+				s++;
 			});
 			$(".container").css('display','none');
 			$(".add_folder").slideDown();
 			$(".btn_add").css('display','block');
+		});
+	}
+	
+	//폴더 안 링크 갯수
+	function countList(folderName){
+	
+		var listRef = firebase.database().ref('list/');
+		
+		listRef.child(userId).on('value', function(snapshot){
+			var num = 0;
+			snapshot.forEach(function(childSnapshot){
+				if(childSnapshot.val().fname == folderName){
+					num++;
+				}
+			});
+			$("#hit_"+folderName).text(num);
 		});
 	}
 	</script>

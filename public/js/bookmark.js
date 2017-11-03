@@ -44,6 +44,11 @@ function fnLinkLoad(userID){
 				articleText += "id='content_article" + articleNum + "'" + fnClickText + ">";
 				articleText += childSnapshot.val().description + "</p></a>";
 				
+				if(childSnapshot.val().fname != ''){
+					articleText += "<div class='folder_area'>'";
+					articleText += childSnapshot.val().fname + "'폴더</div>";
+				}
+				
 				articleText += "<div class='source_area'>";
 				articleText += "<span class='date_article' id='date_article" + articleNum + "'>";
 				articleText += childSnapshot.val().savedDate + "</span>";
@@ -150,6 +155,10 @@ function fnCloseFolderModal(){
 function fnMenuClick(key){
 	
 	articleKey = key;
+	//폴더 리스트 갱신
+	fnFolderList(userId);
+	//해당 링크 URL 가져오기 	
+	var keyUrl = fnChoiceUrl(key);
 	
 	//모달 보이기
 	$("#modal").css('display','block');
@@ -194,13 +203,20 @@ function fnMenuClick(key){
 		$("#edit_modal").css('display','block');
 	});
 	
-	//폴더에 링크 추가/변경
+	//폴더에 링크 저장/변경
 	$("#folder_link").on('click', function(){
-		
+
 		//메뉴 모달 닫기
 		$("#modal").css('display','none');
 		//폴더변경 모달 열기
 		$("#folder_modal").css('display','block');
+		
+		$("#folder_ul > li").each(function(i){
+			$("#folder"+i).on('click',function(){
+				var choicef = $(this).text();
+				fnLinkFolder(keyUrl, choicef);
+			});
+		});
 	});
 }
 
@@ -237,15 +253,46 @@ function fnLinkEdit(){
 	fnLinkLoad(userId);
 }
 
-//링크 폴더추가/변경
-function fnLinkFolder(){
+//링크 폴더저장/변경
+function fnLinkFolder(url, choicefolder){
+
+	databaseRef.child(userId).orderByChild('url').equalTo(url).on('child_added',function(snl){
+		key = snl.key;
+	});
+
+	databaseRef.child(userId+'/'+key).update({
+		fname : choicefolder
+	},function(error){
+		if(error){
+			alert('data error!');
+		}else{
+			alert('링크를 폴더에 저장하였습니다.');
+		}
+	});
 	
-	/*
+	//폴더변경 모달 닫기
+	$("#folder_modal").css('display','none');
+	//메뉴 모달 닫기
+	$("#modal").css('display','none');
+	//링크 고유키 초기화
+	articleKey = null;
+	//링크 재출력
+	fnLinkLoad(userId);
+}
+
+//링크를 폴더에서 삭제
+function fnFolderDelete(){
 	
-	코드 넣기
-	
-	*/
-	
+	databaseRef.child(userId+'/'+articleKey).update({
+		fname : ""
+	},function(error){
+		if(error){
+			alert('data error!');
+		}else{
+			alert('링크를 폴더에서 삭제하였습니다.');
+		}
+	});
+
 	//폴더변경 모달 닫기
 	$("#folder_modal").css('display','none');
 	//메뉴 모달 닫기
@@ -318,6 +365,11 @@ function fnLinkSearch(userID, txt){
 				searchText += "id='content_article" + articleNum + "'" + fnClickText + ">";
 				searchText += childSnapshot.val().description + "</p></a>";
 
+				if(childSnapshot.val().fname != ''){
+					searchText += "<div class='folder_area'>'";
+					searchText += childSnapshot.val().fname + "'폴더</div>";
+				}
+				
 				searchText += "<div class='source_area'>";
 				searchText += "<span class='date_article' id='date_article" + articleNum + "'>";
 				searchText += childSnapshot.val().savedDate + "</span>";
@@ -345,5 +397,36 @@ function fnLinkSearch(userID, txt){
 		resultText = "'" + txt + "' 검색결과 " + articleNum + "개";	
 		$(".list_search").text(resultText);
 		$(".search_container").css('display', 'block');
+	});
+}
+
+/****************************** LINK FOLDER ******************************/
+//링크 선택
+function fnChoiceUrl(key){
+	
+	var url;
+	databaseRef.child(userId+'/'+key).on('value',function(snapshot){
+		url = snapshot.val().url;
+	});
+	return url;
+}
+
+//폴더 리스트
+function fnFolderList(userID){
+	
+	$("#folder_ul").empty();
+	
+	if(!userID){
+		return;
+	}
+
+	var folderRef = firebase.database().ref('folder/');
+	
+	folderRef.child(userID).on('value', function(snapshot){
+		var num = 0;
+		snapshot.forEach(function(snf){
+			$("#folder_ul").append("<li id='folder" + num + "'>" + snf.val().name + "</li>");
+			num++;
+		});
 	});
 }
