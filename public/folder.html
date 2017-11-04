@@ -37,15 +37,25 @@
 
 	/* The Close Button */
 	.close {
-		color: #aaaaaa;
+		/*color: #aaaaaa;
 		float: right;
 		font-size: 28px;
-		font-weight: bold;
+		font-weight: bold;*/
+		display:inline-block;
+		width: 48%;
+		padding: 5px;
+		border-radius:50px;
+		background-color: #aaaaaa;
+		opacity: 0.759;
+		box-shadow: 4px 6.928px 18px 1px rgb( 21, 11, 8 );
+		vertical-align:middle;
+		cursor:pointer;
+		letter-spacing:1px;
 	}
 
 	.close:hover,
 	.close:focus {
-		color: #000;
+		background-color: #EAEAEA;
 		text-decoration: none;
 		cursor: pointer;
 	}
@@ -150,6 +160,66 @@
 		75%{background-color: rgba(255, 255, 255, 1);}
 		100%{background-color: rgba(255, 255, 255, .2);}
 	}
+	
+	.modal .modal-content p {
+		margin-bottom: 10px;
+		padding: 5px;
+		color: #000; 
+		text-align: center;
+		font-size: 1em;	
+		font-family: 'Nanum Gothic', serif;
+		-moz-transform: matrix( 1.41126510928624,0,0,1.42552031241033,0,0);
+		-webkit-transform: matrix( 1.41126510928624,0,0,1.42552031241033,0,0);
+		-ms-transform: matrix( 1.41126510928624,0,0,1.42552031241033,0,0);
+	}
+	
+	.modal .modal-content #del div {
+		margin-bottom: 10px;
+		padding: 10px 0 10px 0; 	
+		border-bottom:1px solid #000;
+		border-radius: 50px;
+		border-style:none;
+		background-color: rgb( 255, 111, 65 );
+		opacity: 0.759;
+		box-shadow: 4px 6.928px 18px 1px rgb( 21, 11, 8 );
+		cursor:pointer;
+		text-align: center;
+		font-size: 1.5em;
+		font-family: 'Nanum Gothic', serif;
+	}
+	
+	.modal .modal-content #del div:hover,
+	.modal .modal-content #del div:focus {
+		background-color: #EAEAEA;
+		text-decoration: none;
+		cursor: pointer;
+	}
+	
+	.modal .modal-content .del_button {
+		padding-top: 10px;
+		display: block;
+		text-align: center;
+	}
+	.modal .modal-content #delete {
+		display:inline-block;
+		width: 48%;
+		padding: 5px;
+		margin-right: 10px;
+		border-radius:50px;
+		background-color: #aaaaaa;
+		opacity: 0.759;
+		box-shadow: 4px 6.928px 18px 1px rgb( 21, 11, 8 );
+		vertical-align:middle;
+		cursor:pointer;
+		letter-spacing:1px;
+	}
+	
+	.modal .modal-content #delete:hover,
+	.modal .modal-content #delete:focus {
+		background-color: #EAEAEA;
+		text-decoration: none;
+		cursor: pointer;
+	}
 	</style>
 	<script src="https://www.gstatic.com/firebasejs/4.5.1/firebase.js"></script>
 	<script src="https://code.jquery.com/jquery-latest.min.js" ></script>
@@ -205,7 +275,8 @@
 							+"<span class='add_hit' id='hit_"+snf.val().name+"'>0</span>"
 						+"</li>");
 				countList(snf.val().name);
-				$("#del").append("<span id='del"+s+"'>"+snf.val().name+"</span><br>");
+				//$("#del").append("<span id='del"+s+"'>"+snf.val().name+"</span><br>");
+				$("#del").append("<div id='del"+s+"'>"+snf.val().name+"</div>");
 				s++;
 			});
 			$(".container").css('display','none');
@@ -286,10 +357,13 @@
 <!-- 삭제 처리 모달 -->
 <div id="modal" class="modal">
     <div class="modal-content">
-    <span class="close">&times;</span>
-    <p>지우고 싶은 폴더를 클릭해주세요.</p>
-    <p id="del" style="font-size:1.5em;"></p>
-    <a href="javascript:;" id="delete" style="text-align:center; color:#000; font-size:3em;">삭제</a>
+    <!--<span class="close">&times;</span>-->
+    <p>삭제하고 싶은 폴더를 클릭해주세요.</p>
+    <div id="del"></div>
+	<div class="del_button">
+		<a href="javascript:;" id="delete" style="text-align:center; color:#000; font-size:1.7em;">삭제</a>
+		<a href="javascript:;" class="close" style="text-align:center; color:#000; font-size:1.7em;">취소</a>
+	</div> 
     </div>
 </div>
 
@@ -335,12 +409,12 @@
 
         $("#remove").on('click',function(){
             updateList();
-            $("#del > span").each(function(i,v){
+            $("#del > div").each(function(i,v){
                 $("#del"+i).on('click',function(){
                     if($(this).hasClass('delOn')){
-                        $(this).removeClass("delOn").css('color','#000');
+                        $(this).removeClass("delOn").css('background-color','rgb( 255, 111, 65 )');
                     }else{
-                        $(this).addClass("delOn").css('color','red');
+                        $(this).addClass("delOn").css('background-color','#FFC8B7');
                     }
                 });
             });

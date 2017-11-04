@@ -60,8 +60,8 @@ function fnLinkLoad(userID){
 					articleText += childSnapshot.val().description + "</p></a>";
 					
 					if(childSnapshot.val().fname != ''){
-						articleText += "<div class='folder_area'>'";
-						articleText += childSnapshot.val().fname + "'폴더</div>";
+						articleText += "<div class='folder_area'>";
+						articleText += childSnapshot.val().fname + " 폴더</div>";
 					}
 				
 					articleText += "<div class='source_area'>";
@@ -103,8 +103,8 @@ function fnLinkLoad(userID){
 				articleText += childSnapshot.val().description + "</p></a>";
 
 				if(childSnapshot.val().fname != ''){
-					articleText += "<div class='folder_area'>'";
-					articleText += childSnapshot.val().fname + "'폴더</div>";
+					articleText += "<div class='folder_area'>";
+					articleText += childSnapshot.val().fname + " 폴더</div>";
 				}
 				
 				articleText += "<div class='source_area'>";
@@ -137,15 +137,6 @@ function fnLinkLoad(userID){
 
 //링크 클릭시 이벤트
 function fnLinkClick(url){
-
-	//즐겨찾기 버튼을 클릭했다면 이벤트 무효화
-/*	if($('.chk_list').hasClass('clicked')){
-		$('.chk_list').removeClass("clicked");
-	}
-	else{
-	//링크 클릭시 해당 링크로 이동
-		location.href = url;
-	}*/
 
 	location.href = url;
 	//location.href = "view.html?link=" + linkKey;
@@ -479,8 +470,8 @@ function fnLinkSearch(userID, txt){
 				searchText += childSnapshot.val().description + "</p></a>";
 
 				if(childSnapshot.val().fname != ''){
-					searchText += "<div class='folder_area'>'";
-					searchText += childSnapshot.val().fname + "'폴더</div>";
+					searchText += "<div class='folder_area'>";
+					searchText += childSnapshot.val().fname + " 폴더</div>";
 				}
 				
 				searchText += "<div class='source_area'>";

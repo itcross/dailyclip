@@ -260,7 +260,7 @@
 
 #folder_ul li:hover,
 #folder_ul li:active {
-	background-color: #D0D0D0;
+	background-color: #EAEAEA;
 }
 
 #folder_modal .modal-content .folder_button {
@@ -269,7 +269,7 @@
 	padding: 10px 0 10px 0;
 	margin-bottom: 15px;
 	border-radius:50px;
-	background-color: #D0D0D0;
+	background-color: #AAAAAA;
 	opacity: 0.759;
 	box-shadow: 4px 6.928px 18px 1px rgb( 21, 11, 8 );
 	vertical-align:middle;
