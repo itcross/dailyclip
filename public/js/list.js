@@ -5,7 +5,7 @@ var userId;	//사용자 고유 아이디
 var articleNum; //클립 갯수
 var articleKey;	//클립 고유키
 var folderParam; //폴더명
-
+var isCheck = false;
 firebase.auth().onAuthStateChanged(function(user) {
  if(user){
 	userEmail = user.email;
@@ -25,22 +25,22 @@ firebase.auth().onAuthStateChanged(function(user) {
 /******************************* LINK LOAD *******************************/
 //해당 유저의 모든 클립 출력
 function fnLinkLoad(userID){
-	
+
 	articleNum = 0;
-  
+
 	try{
 		folderParam = decodeURI($.urlParam('fn'));
 	}catch(err){
 		folderParam = null;
 	}
-	
+
 	$(".link_list").empty();	//link_list 내의 내용 삭제
-	
+
 	databaseRef.child(userID).on('value', snapshot => {
 		snapshot.forEach(function(childSnapshot){
 
 			++articleNum;	//링크 갯수 추가
-			
+
 			if(folderParam){
 				if(folderParam == childSnapshot.val().fname){
 					var articleText = "";
@@ -58,12 +58,12 @@ function fnLinkLoad(userID){
 					articleText += "<a href='#'><p class='content_article'";
 					articleText += "id='content_article" + articleNum + "'" + fnClickText + ">";
 					articleText += childSnapshot.val().description + "</p></a>";
-					
+
 					if(childSnapshot.val().fname != ''){
 						articleText += "<div class='folder_area'>";
 						articleText += childSnapshot.val().fname + " 폴더</div>";
 					}
-				
+
 					articleText += "<div class='source_area'>";
 					articleText += "<span class='date_article' id='date_article" + articleNum + "'>";
 					articleText += childSnapshot.val().savedDate + "</span>";
@@ -106,7 +106,7 @@ function fnLinkLoad(userID){
 					articleText += "<div class='folder_area'>";
 					articleText += childSnapshot.val().fname + " 폴더</div>";
 				}
-				
+
 				articleText += "<div class='source_area'>";
 				articleText += "<span class='date_article' id='date_article" + articleNum + "'>";
 				articleText += childSnapshot.val().savedDate + "</span>";
@@ -262,7 +262,7 @@ function fnMenuClick(key){
 	articleKey = key;
 	//폴더 리스트 갱신
 	fnFolderList(userId);
-	//해당 링크 URL 가져오기 	
+	//해당 링크 URL 가져오기
 	var keyUrl = fnChoiceUrl(key);
 
 	//모달 보이기
@@ -315,14 +315,16 @@ function fnMenuClick(key){
 		$("#modal").css('display','none');
 		//폴더변경 모달 열기
 		$("#folder_modal").css('display','block');
-		
-		$("#folder_ul > li").each(function(i){
-			$("#folder"+i).on('click',function(){
-				var choicef = $(this).text();
-				fnLinkFolder(keyUrl, choicef);
-			});
+
+		$(".folder_li").on('click',function(txt){
+      //console.log(txt.currentTarget.innerHTML);
+      var choicef = txt.currentTarget.innerHTML;
+      fnLinkFolder(key, choicef);
+      $("#folder_link").off();
+
 		});
 	});
+
 }
 
 //링크 수정
@@ -359,11 +361,7 @@ function fnLinkEdit(){
 }
 
 //링크 폴더저장/변경
-function fnLinkFolder(url, choicefolder){
-
-	databaseRef.child(userId).orderByChild('url').equalTo(url).on('child_added',function(snl){
-		key = snl.key;
-	});
+function fnLinkFolder(key, choicefolder){
 
 	databaseRef.child(userId+'/'+key).update({
 		fname : choicefolder
@@ -374,7 +372,7 @@ function fnLinkFolder(url, choicefolder){
 			alert('링크를 폴더에 저장하였습니다.');
 		}
 	});
-	
+
 	//폴더변경 모달 닫기
 	$("#folder_modal").css('display','none');
 	//메뉴 모달 닫기
@@ -387,7 +385,7 @@ function fnLinkFolder(url, choicefolder){
 
 //링크를 폴더에서 삭제
 function fnFolderDelete(){
-	
+
 	databaseRef.child(userId+'/'+articleKey).update({
 		fname : ""
 	},function(error){
@@ -473,7 +471,7 @@ function fnLinkSearch(userID, txt){
 					searchText += "<div class='folder_area'>";
 					searchText += childSnapshot.val().fname + " 폴더</div>";
 				}
-				
+
 				searchText += "<div class='source_area'>";
 				searchText += "<span class='date_article' id='date_article" + articleNum + "'>";
 				searchText += childSnapshot.val().savedDate + "</span>";
@@ -507,7 +505,7 @@ function fnLinkSearch(userID, txt){
 /****************************** LINK FOLDER ******************************/
 //링크 선택
 function fnChoiceUrl(key){
-	
+
 	var url;
 	databaseRef.child(userId+'/'+key).on('value',function(snapshot){
 		url = snapshot.val().url;
@@ -517,19 +515,19 @@ function fnChoiceUrl(key){
 
 //폴더 리스트
 function fnFolderList(userID){
-	
+
 	$("#folder_ul").empty();
-	
+
 	if(!userID){
 		return;
 	}
 
 	var folderRef = firebase.database().ref('folder/');
-	
+
 	folderRef.child(userID).on('value', function(snapshot){
 		var num = 0;
 		snapshot.forEach(function(snf){
-			$("#folder_ul").append("<li id='folder" + num + "'>" + snf.val().name + "</li>");
+			$("#folder_ul").append("<li class=folder_li>" + snf.val().name + "</li>");
 			num++;
 		});
 	});
