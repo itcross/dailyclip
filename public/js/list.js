@@ -319,12 +319,13 @@ function fnMenuClick(key){
 		$("#folder_modal").css('display','block');
 
 		$(".folder_li").on('click',function(txt){
-      //console.log(txt.currentTarget.innerHTML);
-      var choicef = txt.currentTarget.innerHTML;
-      fnLinkFolder(key, choicef);
-      $("#folder_link").off();
-
+	      //console.log(txt.currentTarget.innerHTML);
+	      var choicef = txt.currentTarget.innerHTML;
+	      fnLinkFolder(key, choicef);
+	      
+	      $(".folder_li").off();
 		});
+		$("#folder_link").off();
 	});
 
 }
