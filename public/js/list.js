@@ -290,6 +290,7 @@ function fnMenuClick(key){
 			//링크 재출력
 			fnLinkLoad(userId);
 		}
+		$("#remote_lint").off();
 	});
 
 	//링크 수정 모달 열기
@@ -305,7 +306,8 @@ function fnMenuClick(key){
 		});
 
 		//수정 모달 열기
-		$("#edit_modal").css('display','block');
+		$("#edit_modal").css('display','block')
+		$("#edit_modal").off();
 	});
 
 	//폴더에 링크 저장/변경
