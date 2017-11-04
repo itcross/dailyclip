@@ -277,20 +277,20 @@ function fnMenuClick(key){
 			//메뉴 모달 닫기
 			$("#modal").css('display','none');
 			//삭제 이벤트 무효화
-			$("#remove_link").unbind("click");
+			$("#remove_link").off();
 			//return false;
 		}
 		else{
 			//삭제
-			firebase.database().ref().child('/list/' + userId + '/' + key).remove();
+			databaseRef.child(userId).child(key).remove();
 			//메뉴 모달 닫기
 			$("#modal").css('display','none');
 			//삭제 이벤트 무효화
-			$("#remove_link").unbind("click");
+			$("#remove_link").off();
 			//링크 재출력
 			fnLinkLoad(userId);
 		}
-		$("#remote_lint").off();
+		
 	});
 
 	//링크 수정 모달 열기
@@ -510,8 +510,8 @@ function fnLinkSearch(userID, txt){
 function fnChoiceUrl(key){
 
 	var url;
-	databaseRef.child(userId+'/'+key).on('value',function(snapshot){
-		url = snapshot.val().url;
+	databaseRef.child(userId).child(key).on('value',function(snapshot){
+		url = snapshot.url;
 	});
 	return url;
 }
